@@ -1,0 +1,25 @@
+.news-list {
+  background-color: #f5f6f7;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 400px);
+  justify-content: center;
+  column-gap: 16px;
+  row-gap: 16px;
+  padding: 62px 0;
+}
+
+@media (min-width: 768px) and (max-width: 1280px) {
+  .news-list {
+    grid-template-columns: repeat(auto-fill, 224px);
+    column-gap: 8px;
+    row-gap: 8px;
+    padding: 32px 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .news-list {
+    column-gap: 10px;
+    padding: 24px 0;
+  }
+}

@@ -1,0 +1,75 @@
+.menu {
+  max-width: 1440px;
+  height: 80px;
+  text-align: center;
+  display: flex;
+  margin: 0 auto;
+  padding: 0 104px;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  color: #fff;
+  background: rgba(196, 196, 196, 0.01);
+  box-shadow: inset 0px -1px 0px rgba(255, 255, 255, 0.2);
+}
+
+.menu_dark {
+  box-shadow: inset 0px -1px 0px #d1d2d6;
+  background-color: #fff;
+  color: #1a1b22;
+}
+
+.menu__navigation {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 232px;
+  min-height: 48px;
+  font-family: "Roboto";
+  font-size: 18px;
+  line-height: 24px;
+  font-weight: 500;
+}
+
+.menu__logo {
+  padding: 0;
+  margin: 0;
+  font-family: "Roboto Slab";
+  font-size: 20px;
+  line-height: 24px;
+  font-weight: 700;
+}
+
+.menu__active-button {
+  text-decoration: none;
+  color: #fff;
+  text-decoration: underline solid 3px;
+  text-underline-offset: 29px;
+}
+.menu__active-button_dark {
+  color: #1a1b22;
+  text-decoration: none;
+  text-decoration: underline solid 3px;
+  text-underline-offset: 29px;
+}
+
+.menu__main-button {
+  box-sizing: border-box;
+  min-width: 176px;
+  height: 48px;
+  margin-left: 42px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  border: 1px solid #ffffff;
+  border-radius: 100px;
+  cursor: pointer;
+  background-color: transparent;
+  color: #fff;
+}
+
+.menu__main-button_dark {
+  border: 1px solid #1a1b22;
+  color: #1a1b22;
+}
