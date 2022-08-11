@@ -99,6 +99,9 @@
   }
   .about__title {
     margin: 0 auto;
+    max-width: 288px;
+    height: 40px;
+    font-size: 30px;
   }
   .about__text {
     margin: 16px auto 0 auto;

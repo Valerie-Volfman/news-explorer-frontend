@@ -1,68 +1,90 @@
+/* eslint-disable no-unused-expressions */
 import React from "react";
 import { Routes, Route } from "react-router-dom";
 import "./App.css";
-import Navigation from "../Navigation/Navigation";
 import Main from "../Main/Main";
 import SavedNews from "../SavedNews/SavedNews";
 import PopupWithForm from "../PopupWithForm/PopupWithForm";
-// import Footer from "../Footer/Footer";
+import Footer from "../Footer/Footer";
 import About from "../About/About";
 import PopupInput from "../PopupInput/PopupInput";
+import InfoPopup from "../InfoPopup/InfoPopup";
 
 function App() {
   const [isSignInPopupOpen, setIsSignInPopupOpen] = React.useState(false);
   const [isSignUpPopupOpen, setIsSignUpPopupOpen] = React.useState(false);
+  const [isSearchResultOpen, setIsSearchResultOpen] = React.useState(false);
+  const [isInfoPopupOpen, setIsInfoPopupOpen] = React.useState(false);
+  // const [isBurgerPopupOpen, setIsBurgerPopupOpen] = React.useState(false);
+  // const [isTheWhiteTheme, setIsTheWhiteTheme] = React.useState(false);
+
+  function handleSearchResultClick() {
+    setIsSearchResultOpen(true);
+  }
 
   function closeAllPopups() {
     setIsSignInPopupOpen(false);
     setIsSignUpPopupOpen(false);
   }
 
+  function handleInfoPopupClick() {
+    closeAllPopups();
+    setIsInfoPopupOpen(true);
+  }
+
   function handleSignInClick() {
-    closeAllPopups()
+    closeAllPopups();
     setIsSignInPopupOpen(true);
   }
 
   function handleSignUpClick() {
-    closeAllPopups()
+    closeAllPopups();
     setIsSignUpPopupOpen(true);
   }
 
-  React.useEffect(() => { 
+  React.useEffect(() => {
     const closeByEscape = (e) => {
       if (e.key === "Escape") {
         closeAllPopups();
       }
     };
     if (isSignInPopupOpen || isSignUpPopupOpen)
-    document.addEventListener("keydown", closeByEscape);
+      document.addEventListener("keydown", closeByEscape);
     return () => document.removeEventListener("keydown", closeByEscape);
   }, [isSignInPopupOpen, isSignUpPopupOpen]);
 
-React.useEffect(() => {
+  React.useEffect(() => {
     const closeByClickOnScreen = (e) => {
-    if (e.target.matches(".popup")) {
-      const popup = document.querySelectorAll(".popup");
-      if (e.target !== popup) {
-      closeAllPopups();
+      if (e.target.matches(".popup")) {
+        const popup = document.querySelectorAll(".popup");
+        if (e.target !== popup) {
+          closeAllPopups();
+        }
       }
-    }
-  };
-  if (isSignInPopupOpen || isSignUpPopupOpen)
-  document.addEventListener("mouseup", closeByClickOnScreen);
-  return () => document.removeEventListener("mouseup", closeByClickOnScreen);
-}, [isSignInPopupOpen, isSignUpPopupOpen]);
-  
+    };
+    if (isSignInPopupOpen || isSignUpPopupOpen)
+      document.addEventListener("mouseup", closeByClickOnScreen);
+    return () => document.removeEventListener("mouseup", closeByClickOnScreen);
+  }, [isSignInPopupOpen, isSignUpPopupOpen]);
+
   return (
     <div className="app app__bg-image">
-      <Navigation onSignInPopupClick={() => handleSignInClick()} />
       <Routes>
-        <Route path="/" element={<Main />} />
+        <Route
+          path="/"
+          element={
+            <Main
+              onSignInPopupClick={() => handleSignInClick()}
+              onClick={() => handleSearchResultClick}
+              isOpen={isSearchResultOpen}
+            />
+          }
+        />
         <Route path="/saved-news" element={<SavedNews />} />
       </Routes>
       <About />
       <PopupWithForm
-      onSignUpPopupClick={() => handleSignUpClick()}
+        onSignUpPopupClick={() => handleSignUpClick()}
         isOpen={isSignInPopupOpen}
         onClose={() => closeAllPopups()}
         name="sign-in"
@@ -71,7 +93,7 @@ React.useEffect(() => {
         linkText="Sign up"
       >
         <PopupInput
-        title="Email"
+          title="Email"
           id="input_type_email"
           type="email"
           placeholder="Enter email"
@@ -79,7 +101,7 @@ React.useEffect(() => {
           errorText="Invalid email address"
         />
         <PopupInput
-        title="Password"
+          title="Password"
           id="input_type_password"
           type="password"
           placeholder="Enter password"
@@ -88,7 +110,7 @@ React.useEffect(() => {
         />
       </PopupWithForm>
       <PopupWithForm
-      onSignInPopupClick={() => handleSignInClick()}
+        onSignInPopupClick={() => handleSignInClick()}
         isOpen={isSignUpPopupOpen}
         onClose={() => closeAllPopups()}
         name="sign-up"
@@ -97,7 +119,7 @@ React.useEffect(() => {
         linkText="Sign in"
       >
         <PopupInput
-        title="Email"
+          title="Email"
           id="input_type_email"
           type="email"
           placeholder="Enter email"
@@ -105,7 +127,7 @@ React.useEffect(() => {
           errorText="Invalid email address"
         />
         <PopupInput
-        title="Password"
+          title="Password"
           id="input_type_password"
           type="password"
           placeholder="Enter password"
@@ -113,7 +135,7 @@ React.useEffect(() => {
           errorText="Invalid password"
         />
         <PopupInput
-        title="Username"
+          title="Username"
           id="input_type_username"
           type="text"
           placeholder="Enter your username"
@@ -121,7 +143,12 @@ React.useEffect(() => {
           errorText="Invalid username"
         />
       </PopupWithForm>
-      {/* <Footer /> */}
+      <InfoPopup
+        isOpen={isInfoPopupOpen}
+        onInfoPopupClick={() => handleInfoPopupClick()}
+        onClose={() => closeAllPopups()}
+      />
+      <Footer />
     </div>
   );
 }

@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import "./PopupWithForm.css";
 
 function PopupWithForm({
@@ -13,6 +14,10 @@ function PopupWithForm({
   onSignInPopupClick,
   onSignUpPopupClick,
 }) {
+  const navigateTo = useNavigate();
+  function linkToNews() {
+    navigateTo("/saved-news");
+  }
   return (
     <div className={`popup popup_type_${name} ${isOpen && "popup__is-opened"}`}>
       <div className="popup__content">
@@ -32,6 +37,7 @@ function PopupWithForm({
             This email is not available
           </span>
           <button
+            onClick={linkToNews}
             aria-label="save"
             type="submit"
             name="popupSaveButton"
@@ -40,12 +46,13 @@ function PopupWithForm({
             {buttonText}
           </button>
           <p className="popup__link">
-      or{" "}
-      <button
-        type="button" onClick={onSignUpPopupClick || onSignInPopupClick}
-        className="popup__link-words"
-      >{`${linkText}`}</button>
-    </p>
+            or{" "}
+            <button
+              type="button"
+              onClick={onSignUpPopupClick || onSignInPopupClick}
+              className="popup__link-words"
+            >{`${linkText}`}</button>
+          </p>
         </form>
       </div>
     </div>

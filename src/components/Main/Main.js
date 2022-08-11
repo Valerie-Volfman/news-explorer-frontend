@@ -1,14 +1,17 @@
+/* eslint-disable react/prop-types */
 import React from "react";
-import Footer from "../Footer/Footer";
+import SearchResults from "../SearchResults/SearchResults";
 import Header from "../Header/Header";
+import Navigation from "../Navigation/Navigation";
 
-function Main() {
-    return (
-        <>
-        <Header />
-        <Footer />
-        </>
-    )
+function Main({ onSignInPopupClick }) {
+  return (
+    <>
+      <Navigation onSignInPopupClick={onSignInPopupClick} />
+      <Header />
+      <SearchResults />
+    </>
+  );
 }
 
 export default Main;
