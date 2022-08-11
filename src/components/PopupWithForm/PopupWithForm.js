@@ -13,6 +13,7 @@ function PopupWithForm({
   linkText,
   onSignInPopupClick,
   onSignUpPopupClick,
+  onInfoPopupClick,
 }) {
   const navigateTo = useNavigate();
   function linkToNews() {
@@ -37,6 +38,7 @@ function PopupWithForm({
             This email is not available
           </span>
           <button
+            onSubmit={onInfoPopupClick}
             onClick={linkToNews}
             aria-label="save"
             type="submit"

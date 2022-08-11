@@ -110,6 +110,7 @@ function App() {
         />
       </PopupWithForm>
       <PopupWithForm
+      onInfoPopupClick={() => handleInfoPopupClick()}
         onSignInPopupClick={() => handleSignInClick()}
         isOpen={isSignUpPopupOpen}
         onClose={() => closeAllPopups()}
@@ -144,8 +145,8 @@ function App() {
         />
       </PopupWithForm>
       <InfoPopup
+      name="info-popup"
         isOpen={isInfoPopupOpen}
-        onInfoPopupClick={() => handleInfoPopupClick()}
         onClose={() => closeAllPopups()}
       />
       <Footer />

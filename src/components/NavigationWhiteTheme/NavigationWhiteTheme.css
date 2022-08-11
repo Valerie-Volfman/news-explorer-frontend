@@ -16,7 +16,7 @@
 .menu-white__bg {
   display: flex;
   flex-direction: row;
-  width: 1232px;
+  width: 100%;
   margin: 0 auto;
   align-items: center;
   justify-content: space-between;
@@ -45,6 +45,7 @@
   justify-content: space-around;
   align-items: center;
   width: 450px;
+  margin: 0 auto;
   min-height: 48px;
   font-family: "Roboto";
   font-size: 18px;
@@ -52,7 +53,7 @@
   font-weight: 500;
 }
 
-.menu__logo {
+.menu__logo-dark {
   padding: 0;
   margin: 0 auto 0 0;
   font-family: "Roboto Slab";
@@ -68,7 +69,7 @@
   text-decoration: underline solid 3px;
   text-underline-offset: 29px;
 }
-.menu__active-button_dark {
+.menu__active-button-dark {
   color: #1a1b22;
   text-decoration: none;
   height: 24px;
@@ -83,9 +84,9 @@
   color: #1a1b22;
 }
 
-.menu-white__main-button {
+.menu__main-button-dark {
   box-sizing: border-box;
-  min-width: 176px;
+  width: 176px;
   height: 48px;
   margin-left: 42px;
   display: flex;
@@ -97,9 +98,6 @@
   cursor: pointer;
   background-color: transparent;
   color: #fff;
-}
-
-.menu__main-button_dark {
   border: 1px solid #1a1b22;
   color: #1a1b22;
 }
@@ -108,13 +106,18 @@
   .menu {
     padding: 0 auto 0 40px;
   }
+  .menu__main-button_dark {
+    width: 100px;
+    height: 40px;
+    margin-left: 16px;
+  }
 }
 
 @media (max-width: 768px) {
   .menu {
     justify-content: space-between;
     max-width: 100vw;
-    height: 56px;
+    height: 6ss6px;
     margin: 0 auto;
     padding: 0;
     bottom: 0;
@@ -136,6 +139,9 @@
     top: 0;
     transition: visibility 0ms 400ms, opacity 400ms;
   }
+  .menu-white__navigation {
+    max-width: 288px;
+  }
   .menu__bg_is-opened {
     width: 100vw;
     height: 230px;
@@ -147,7 +153,7 @@
     bottom: 0;
     background: rgba(0, 0, 0, 1);
   }
-  .menu__burger-button {
+  .menu-white__burger-button {
     width: 24px;
     height: 8px;
     position: absolute;
@@ -155,22 +161,31 @@
     margin-top: 24px;
     top: 0;
     right: 0;
-    color: #fff;
+    color: #1a1b22;
     opacity: 1;
     visibility: visible;
     cursor: pointer;
     border: none;
-    border-top: #fff solid 2px;
-    border-bottom: #fff solid 2px;
+    border-top: #1a1b22 solid 2px;
+    border-bottom: #1a1b22 solid 2px;
     background: transparent;
     transition: all 0.5s ease-in-out;
   }
-  .menu__logo {
-    color: #fff;
+  .menu__non-active {
+    visibility: hidden;
+    overflow: hidden;
+    opacity: 0;
+    pointer-events: none;
+  }
+  .menu_dark {
+    width: 100vw;
+  }
+  .menu__logo-dark {
+    color: #1a1b22;
     margin: 16px 0 16px 16px;
     max-width: 117px;
   }
-  .menu__main-button {
+  .menu__main-button-dark {
     visibility: hidden;
     overflow: hidden;
     opacity: 0;
@@ -180,7 +195,7 @@
     margin: 16px;
     color: #fff;
   }
-  .menu__active-button {
+  .menu__active-button-dark {
     visibility: hidden;
     overflow: hidden;
     opacity: 0;

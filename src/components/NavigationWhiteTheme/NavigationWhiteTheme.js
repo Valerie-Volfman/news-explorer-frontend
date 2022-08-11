@@ -17,14 +17,14 @@ function NavigationWhiteTheme({ onSignInPopupClick, onBurgerPopupClick }) {
     navigateTo("/saved-news");
   }
   return (
-    <div className="menu-white menu_dark">
+    <div className="menu menu_dark">
       <div className="menu-white__bg">
-        <p className="menu__logo">NewsExplorer</p>
+        <p className="menu__logo-dark">NewsExplorer</p>
         <nav className="menu-white__navigation">
           <Link className="menu__non-active" to="/">
             Home
           </Link>
-          <a href={linkToNews} className="menu__active-button_dark">
+          <a href={linkToNews} className="menu__active-button-dark">
             Saved articles
           </a>
           <button
@@ -35,7 +35,7 @@ function NavigationWhiteTheme({ onSignInPopupClick, onBurgerPopupClick }) {
           <button
             type="submit"
             onClick={handleSignInClick}
-            className="menu-white__main-button menu__main-button_dark"
+            className="menu__main-button-dark"
           >
             Elise
             <img className="menu__exit-button" src={exit} alt="exit" />
