@@ -30,6 +30,7 @@
   max-width: 600px;
   max-height: 190px;
   margin: 51px auto 0 0;
+  color: #1a1b22;
 }
 
 .about__title {
@@ -82,7 +83,7 @@
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 767px) {
   .about {
     flex-direction: column;
     align-items: center;

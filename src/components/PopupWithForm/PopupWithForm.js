@@ -14,6 +14,7 @@ function PopupWithForm({
   onSignInPopupClick,
   onSignUpPopupClick,
   onInfoPopupClick,
+  onLoggedInClick,
 }) {
   const navigateTo = useNavigate();
   function linkToNews() {
@@ -28,8 +29,8 @@ function PopupWithForm({
           type="button"
           className="popup__close-button"
         />
-        <p className="popup__title">{title}</p>
-        <form name={name} className="popup__form">
+        <h2 className="popup__title">{title}</h2>
+        <form onSubmit={onLoggedInClick} name={name} className="popup__form">
           {children}
           <span
             id="input_type_profession-error"

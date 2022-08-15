@@ -1,13 +1,35 @@
+/* eslint-disable no-console */
+/* eslint-disable jsx-a11y/control-has-associated-label */
 import React from "react";
+import { useLocation } from "react-router-dom";
 import "./NewsCard.css";
-// import Trash from "../../images/Trash.svg";
 
 function NewsCard() {
+  const location = useLocation();
+  const savedNewsPageLocation = location.pathname === "/saved-news";
   return (
-    <div className="card">
+    <article className="card">
       <div className="card__image">
-        <div className="card__keyword">Nature</div>
-        <div className="card__trash-button" />
+        <button
+          type="button"
+          className={`card__keyword ${
+            !savedNewsPageLocation && "card__keyword_hidden"
+          }`}
+        >
+          Nature
+        </button>
+
+        <button
+          onClick={() => console.log(location.pathname)}
+          type="button"
+          className={`card__icon ${
+            savedNewsPageLocation
+              ? "card__icon_button_trash"
+              : "card__icon_button_flag"
+          }`}
+        >
+          <span className="card__icon-hover">Sign in to save articles</span>
+        </button>
       </div>
       <p className="card__date">November 4, 2020</p>
       <h3 className="card__title">
@@ -20,7 +42,7 @@ function NewsCard() {
         Jon Young, is for both adults and children to find...
       </p>
       <p className="card__source">TREEHUGGER</p>
-    </div>
+    </article>
   );
 }
 

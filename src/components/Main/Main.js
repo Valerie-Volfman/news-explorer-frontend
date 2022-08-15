@@ -2,14 +2,16 @@
 import React from "react";
 import SearchResults from "../SearchResults/SearchResults";
 import Header from "../Header/Header";
-import Navigation from "../Navigation/Navigation";
+import Preloader from "../Preloader/Preloader";
+import NothingFound from "../NothingFound/NothingFound";
 
-function Main({ onSignInPopupClick }) {
+function Main() {
   return (
     <>
-      <Navigation onSignInPopupClick={onSignInPopupClick} />
       <Header />
+      <Preloader />
       <SearchResults />
+      <NothingFound />
     </>
   );
 }

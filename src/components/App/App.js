@@ -1,6 +1,8 @@
-/* eslint-disable no-unused-expressions */
+/* eslint-disable no-unused-vars */
+/* eslint-disable react/jsx-no-bind */
+/* eslint-disable import/no-duplicates */
 import React from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 import "./App.css";
 import Main from "../Main/Main";
 import SavedNews from "../SavedNews/SavedNews";
@@ -9,22 +11,44 @@ import Footer from "../Footer/Footer";
 import About from "../About/About";
 import PopupInput from "../PopupInput/PopupInput";
 import InfoPopup from "../InfoPopup/InfoPopup";
+import Navigation from "../Navigation/Navigation";
+import MobilePopup from "../MobilePopup/MobilePopup";
+import CurrentUserContext from "../../contexts/CurrentUserContext";
 
 function App() {
   const [isSignInPopupOpen, setIsSignInPopupOpen] = React.useState(false);
   const [isSignUpPopupOpen, setIsSignUpPopupOpen] = React.useState(false);
   const [isSearchResultOpen, setIsSearchResultOpen] = React.useState(false);
   const [isInfoPopupOpen, setIsInfoPopupOpen] = React.useState(false);
-  // const [isBurgerPopupOpen, setIsBurgerPopupOpen] = React.useState(false);
-  // const [isTheWhiteTheme, setIsTheWhiteTheme] = React.useState(false);
+  const [isMobilePopupOpen, setIsMobilePopupOpen] = React.useState(false);
+  const [loggedIn, setIsLoggedIn] = React.useState(false);
+  const location = useLocation();
+  const homePage = location.pathname === "/";
+  // const [currentUser, setCurrentUser] = React.useState({});
 
   function handleSearchResultClick() {
     setIsSearchResultOpen(true);
   }
 
   function closeAllPopups() {
+    setIsMobilePopupOpen(false);
     setIsSignInPopupOpen(false);
     setIsSignUpPopupOpen(false);
+  }
+
+  function handleMobilePopupClickOpen() {
+    closeAllPopups();
+    setIsMobilePopupOpen(true);
+  }
+
+  function handleMobilePopupClickClose() {
+    closeAllPopups();
+    setIsMobilePopupOpen(false);
+  }
+
+  function handleLoggedInClick() {
+    closeAllPopups();
+    setIsLoggedIn(true);
   }
 
   function handleInfoPopupClick() {
@@ -68,22 +92,30 @@ function App() {
   }, [isSignInPopupOpen, isSignUpPopupOpen]);
 
   return (
-    <div className="app app__bg-image">
+    <div className={`${homePage ? "app_theme_dark" : "app"}`}>
+      <Navigation
+        name="Elise"
+        onClose={() => closeAllPopups()}
+        onMobilePopupClickClose={() => handleMobilePopupClickClose()}
+        onMobilePopupClickOpen={() => handleMobilePopupClickOpen()}
+        onSignInPopupClick={() => handleSignInClick()}
+      />
       <Routes>
         <Route
           path="/"
           element={
             <Main
-              onSignInPopupClick={() => handleSignInClick()}
               onClick={() => handleSearchResultClick}
               isOpen={isSearchResultOpen}
             />
           }
         />
-        <Route path="/saved-news" element={<SavedNews />} />
+        <Route path="/saved-news" element={<SavedNews loggedIn={loggedIn} />} />
       </Routes>
       <About />
       <PopupWithForm
+        loggedIn={loggedIn}
+        onLoggedInClick={() => handleLoggedInClick()}
         onSignUpPopupClick={() => handleSignUpClick()}
         isOpen={isSignInPopupOpen}
         onClose={() => closeAllPopups()}
@@ -110,7 +142,7 @@ function App() {
         />
       </PopupWithForm>
       <PopupWithForm
-      onInfoPopupClick={() => handleInfoPopupClick()}
+        onInfoPopupClick={() => handleInfoPopupClick()}
         onSignInPopupClick={() => handleSignInClick()}
         isOpen={isSignUpPopupOpen}
         onClose={() => closeAllPopups()}
@@ -145,8 +177,14 @@ function App() {
         />
       </PopupWithForm>
       <InfoPopup
-      name="info-popup"
+        name="info-popup"
         isOpen={isInfoPopupOpen}
+        onClose={() => closeAllPopups()}
+      />
+      <MobilePopup
+        name="mobile"
+        onSignInPopupClick={() => handleSignInClick()}
+        isOpenMobile={isMobilePopupOpen}
         onClose={() => closeAllPopups()}
       />
       <Footer />

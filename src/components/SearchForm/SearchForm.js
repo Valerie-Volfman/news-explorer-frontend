@@ -3,13 +3,13 @@ import "./SearchForm.css";
 
 function SearchForm() {
   return (
-    <form className="search__form">
+    <form className="search-form">
       <input
-        className="search__input"
+        className="search-form__input"
         defaultValue="Enter topic"
         type="search"
       />
-      <button type="submit" className="search__button">
+      <button type="submit" className="search-form__button">
         Search
       </button>
     </form>

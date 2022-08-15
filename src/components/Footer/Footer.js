@@ -9,17 +9,37 @@ function Footer() {
     <footer className="footer">
       <nav className="footer__links-block">
         <ul className="footer__links">
-          <li className="footer__link" href="/">
-            Home
+          <li>
+            <a className="footer__link" href="/">
+              Home
+            </a>
           </li>
-          <li>Practicum by Yandex</li>
+          <li>
+            <a
+            className="footer__link_yandex"
+              rel="noreferrer"
+              target="_blank"
+              href="https://practicum.com/en-isr/?gclid=Cj0KCQjw3eeXBhD7ARIsAHjssr-7pMtZjdyH7yXG1aaKJxXzQhn-B2L7wfaM9fqZt5Q86NOzOZ9TJdAaAsxAEALw_wcB"
+            >
+              Practicum by Yandex
+            </a>
+          </li>
         </ul>
         <ul className="footer__icons">
-          <li href="https://github.com/">
-            <img alt="github-icon" src={github} />
+          <li>
+            <a rel="noreferrer" target="_blank" href="https://github.com/">
+              <img alt="github-icon" src={github} />
+            </a>
           </li>
-          <li className="footer__icon" href="https://ru-ru.facebook.com/">
-            <img alt="github-icon" src={facebook} />
+          <li>
+            <a
+              rel="noreferrer"
+              target="_blank"
+              className="footer__icon"
+              href="https://ru-ru.facebook.com/"
+            >
+              <img alt="github-icon" src={facebook} />
+            </a>
           </li>
         </ul>
       </nav>

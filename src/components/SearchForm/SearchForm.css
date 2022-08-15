@@ -1,6 +1,6 @@
-.search__form {
+.search-form {
   background-color: transparent;
-  font-family: "Roboto";
+  font-family: "Roboto", sans-serif;
   display: flex;
   padding: 0;
   flex-direction: row;
@@ -13,7 +13,7 @@
   border-style: none;
 }
 
-.search__input {
+.search-form__input {
   font-weight: 400;
   font-size: 16px;
   line-height: 22px;
@@ -26,7 +26,7 @@
   color: #b6bcbf;
 }
 
-.search__button {
+.search-form__button {
   font-weight: 500;
   font-size: 18px;
   line-height: 24px;
@@ -43,34 +43,34 @@
 }
 
 @media (min-width: 768px) and (max-width: 1024px) {
-  .search__form {
+  .search-form {
     max-width: 452px;
     height: 56px;
   }
-  .search__input {
+  .search-form__input {
     max-width: 448px;
   }
-  .search__button {
+  .search-form__button {
     min-width: 160px;
     height: 56px;
   }
 }
 
 @media (max-width: 768px) {
-  .search__form {
+  .search-form {
     background-color: transparent;
     width: 288px;
     height: 128px;
     display: inline;
-    margin: 48px auto 48px auto;
+    margin: 122px auto 32px auto;
   }
-  .search__input {
+  .search-form__input {
     padding: 17px 16px 17px 16px;
     margin: 0;
     width: 288px;
     height: 56px;
   }
-  .search__button {
+  .search-form__button {
     margin-top: 16px;
     width: 288px;
     height: 56px;
