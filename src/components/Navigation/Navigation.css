@@ -69,6 +69,7 @@ svg {
   position: relative;
   pointer-events: visible;
   padding: 0;
+  margin: 0 16px;
 }
 
 .menu__button_state_hidden {
@@ -81,13 +82,14 @@ svg {
 .menu__button_state_active {
   text-decoration: underline solid 3px;
   text-underline-offset: 31px;
-  margin: 0 16px;
-  color: inherit;
   padding: 0;
+  color: inherit;
+  margin: 0 0 0 16px;
 }
 
 .menu__button_state_non-active {
   text-decoration: none;
+  color: inherit;
 }
 
 .menu__main-button {
@@ -207,7 +209,7 @@ svg {
     width: 100px;
     min-width: fit-content;
     height: 40px;
-    margin: 0;
+    color: inherit;
   }
   .menu__burger-button {
     position: absolute;

@@ -21,7 +21,7 @@ function App() {
   const [isSearchResultOpen, setIsSearchResultOpen] = React.useState(false);
   const [isInfoPopupOpen, setIsInfoPopupOpen] = React.useState(false);
   const [isMobilePopupOpen, setIsMobilePopupOpen] = React.useState(false);
-  const [loggedIn, setIsLoggedIn] = React.useState(false);
+  const [loggedIn, setLoggedIn] = React.useState(false);
   const location = useLocation();
   const homePage = location.pathname === "/";
   // const [currentUser, setCurrentUser] = React.useState({});
@@ -36,6 +36,16 @@ function App() {
     setIsSignUpPopupOpen(false);
   }
 
+  function handleLoggedInClick() {
+    console.log("zashli!!!")
+    setLoggedIn(true);
+  }
+
+  function handleLoggedOutState() {
+    setLoggedIn(false);
+    console.log("vishli:(((")
+  }
+
   function handleMobilePopupClickOpen() {
     closeAllPopups();
     setIsMobilePopupOpen(true);
@@ -44,11 +54,6 @@ function App() {
   function handleMobilePopupClickClose() {
     closeAllPopups();
     setIsMobilePopupOpen(false);
-  }
-
-  function handleLoggedInClick() {
-    closeAllPopups();
-    setIsLoggedIn(true);
   }
 
   function handleInfoPopupClick() {
@@ -92,9 +97,12 @@ function App() {
   }, [isSignInPopupOpen, isSignUpPopupOpen]);
 
   return (
-    <div className={`${homePage ? "app_theme_dark" : "app"}`}>
+    <div className={`app ${homePage ? "app_theme_dark" : ""}`}>
       <Navigation
         name="Elise"
+        loggedIn={loggedIn}
+        onLoggedInClick={() => handleLoggedInClick()}
+        onLoggedOut={() => handleLoggedOutState()}
         onClose={() => closeAllPopups()}
         onMobilePopupClickClose={() => handleMobilePopupClickClose()}
         onMobilePopupClickOpen={() => handleMobilePopupClickOpen()}
@@ -114,7 +122,7 @@ function App() {
       </Routes>
       <About />
       <PopupWithForm
-        loggedIn={loggedIn}
+      loggedIn={loggedIn}
         onLoggedInClick={() => handleLoggedInClick()}
         onSignUpPopupClick={() => handleSignUpClick()}
         isOpen={isSignInPopupOpen}

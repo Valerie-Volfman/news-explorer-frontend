@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import React from "react";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import "./PopupWithForm.css";
 
 function PopupWithForm({
@@ -16,10 +16,16 @@ function PopupWithForm({
   onInfoPopupClick,
   onLoggedInClick,
 }) {
-  const navigateTo = useNavigate();
-  function linkToNews() {
-    navigateTo("/saved-news");
+  // const navigateTo = useNavigate();
+  // function linkToNews() {
+  //   navigateTo("/saved-news");
+  // }
+
+  function handleLoggedInState() {
+    onLoggedInClick(true)
+    console.log("zakrili popup")
   }
+
   return (
     <div className={`popup popup_type_${name} ${isOpen && "popup__is-opened"}`}>
       <div className="popup__content">
@@ -30,7 +36,7 @@ function PopupWithForm({
           className="popup__close-button"
         />
         <h2 className="popup__title">{title}</h2>
-        <form onSubmit={onLoggedInClick} name={name} className="popup__form">
+        <form onSubmit={() => handleLoggedInState()} name={name} className="popup__form">
           {children}
           <span
             id="input_type_profession-error"
@@ -39,8 +45,7 @@ function PopupWithForm({
             This email is not available
           </span>
           <button
-            onSubmit={onInfoPopupClick}
-            onClick={linkToNews}
+            onClick={() => { onInfoPopupClick()}}
             aria-label="save"
             type="submit"
             name="popupSaveButton"
