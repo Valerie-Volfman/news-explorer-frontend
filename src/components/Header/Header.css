@@ -4,6 +4,7 @@
   justify-content: center;
   flex-direction: column;
   max-width: 1440px;
+  width: 100%;
   margin: 0 auto 0 auto;
 }
 
@@ -31,7 +32,7 @@
   height: auto;
 }
 
-@media (min-width: 768px) and (max-width: 1024px) {
+@media (min-width: 637px) and (max-width: 820px) {
   .header {
     margin: 0 auto;
     max-width: 768px;
@@ -49,7 +50,7 @@
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 636px) {
   .header {
     width: 320px;
     margin: 0 auto;

@@ -19,7 +19,7 @@ function PopupInput({
         placeholder={`${placeholder}`}
         name={inputName}
         minLength="4"
-        maxLength="15"
+        maxLength="45"
         required
         className="popup__input popup__input_type_email"
       />

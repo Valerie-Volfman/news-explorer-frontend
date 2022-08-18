@@ -128,7 +128,7 @@
   cursor: pointer;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 636px) {
   .popup {
     max-width: 768px;
     margin: 0 auto;

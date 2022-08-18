@@ -8,7 +8,7 @@ svg {
   text-align: center;
   display: flex;
   margin: 0;
-  padding: 0 104px;
+  padding: 0;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
@@ -21,7 +21,7 @@ svg {
   justify-content: space-between;
   align-items: center;
   margin: 0 auto;
-  padding: 0 auto;
+  padding: 0;
   max-width: 1440px;
   box-shadow: inset 0px -1px 0px rgba(255, 255, 255, 0.2);
 }
@@ -34,17 +34,16 @@ svg {
 .menu__bg {
   display: flex;
   flex-direction: row;
-  width: 1232px;
-  margin: 0 auto;
   align-items: center;
+  width: 100%;
   justify-content: space-between;
 }
 
 .menu__navigation {
   display: flex;
+  margin: 0 104px 0 0;
   justify-content: space-between;
   align-items: center;
-  min-width: fit-content;
   min-height: 48px;
   font-family: "Roboto", sans-serif;
   font-size: 18px;
@@ -55,7 +54,7 @@ svg {
 .menu__logo {
   text-align: left;
   padding: 0;
-  margin: 0 auto 0 0;
+  margin: 0 0 0 104px;
   font-family: "Roboto Slab", sans-serif;
   font-size: 20px;
   line-height: 24px;
@@ -69,7 +68,8 @@ svg {
   position: relative;
   pointer-events: visible;
   padding: 0;
-  margin: 0 16px;
+  margin: 0 42px;
+  min-width: fit-content;
 }
 
 .menu__button_state_hidden {
@@ -84,7 +84,7 @@ svg {
   text-underline-offset: 31px;
   padding: 0;
   color: inherit;
-  margin: 0 0 0 16px;
+  margin: 0 42px 0 0;
 }
 
 .menu__button_state_non-active {
@@ -96,7 +96,8 @@ svg {
   box-sizing: border-box;
   width: 176px;
   height: 48px;
-  margin-left: 42px;
+  padding: 0;
+  margin: 0;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -124,7 +125,8 @@ svg {
   height: 24px;
   margin-right: 16px;
   display: flex;
-  position: relative;
+  position: absolute;
+  right: 0;
   cursor: pointer;
   border: none;
   background-color: transparent;
@@ -169,36 +171,46 @@ svg {
   bottom: 11px;
   transform: rotate(135deg);
 }
-@media (min-width: 768px) and (max-width: 980px) {
+
+@media (min-width: 849px) and (max-width: 1048px) {
+  .menu__button {
+    margin: 0 16px;
+  }
+  .menu__button_state_active {
+    margin: 0 16px 0 0;
+  }
+}
+
+@media (min-width: 638px) and (max-width: 848px) {
   .menu {
-    max-width: 768px;
-    min-width: 688px;
+    width: 100%;
     height: 66px;
     justify-content: space-between;
-    padding: 0 40px;
+    padding: 0;
   }
   .menu__logo {
-    margin: 0;
+    margin: 0 auto 0 40px;
   }
   .menu_theme_light {
-    max-width: 768px;
-    min-width: 688px;
+    width: 100%;
   }
   .menu__bg {
     display: flex;
-    width: 688px;
+    width: 100%;
     justify-content: space-between;
   }
   .menu__navigation {
     font-size: 16px;
-    max-width: 356px;
+    margin: 0 40px 0 auto;
   }
   .menu__button {
     padding: 0;
+    margin: 0, 16px;
   }
   .menu__button_state_active {
     text-underline-offset: 25px;
     padding: 0;
+    margin: 0 16px;
   }
   .menu__main-button {
     width: 152px;
@@ -216,7 +228,7 @@ svg {
   }
 }
 
-@media (max-width: 767px) {
+@media (max-width: 637px) {
   .menu {
     justify-content: space-between;
     min-width: 100vw;
