@@ -34,7 +34,7 @@ function Navigation({
       }`}
     >
       <div className="menu__bg">
-        <p className="menu__logo">NewsExplorer</p>
+        <Link to="/" className="menu__logo">NewsExplorer</Link>
         <nav className="menu__navigation">
           <Link
             className={`menu__button menu__button_state_active ${
