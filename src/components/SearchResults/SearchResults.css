@@ -32,7 +32,7 @@
   margin: 2px auto 0 auto;
   padding: 0;
   color: #1a1b22;
-  font-family: "Roboto";
+  font-family: "Roboto", sans-serif;
   font-size: 18px;
   line-height: 24px;
   font-weight: 500;
@@ -43,20 +43,37 @@
   background-color: #e8e8e8;
 }
 
+@media (min-width: 1107px) and (max-width: 1437px) {
+  .search-results__title {
+    margin: 0 auto 0 204px;
+  }
+}
+
+@media (min-width: 912px) and (max-width: 1106px) {
+  .search-results__title {
+    font-size: 40px;
+    line-height: 46px;
+  }
+}
+
 @media (min-width: 768px) and (max-width: 1020px) {
+  .search-results__title {
+    font-size: 30px;
+    line-height: 34px;
+    margin: 0 auto 0 40px;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1106px) {
   .search-results {
     padding: 0 0 40px 0;
   }
   .search-results__overview {
     margin-bottom: 32px;
   }
-  .search-results__title {
-    font-size: 30px;
-    line-height: 34px;
-  }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 767px) {
   .search-results {
     max-width: 768px;
     width: 100vw;

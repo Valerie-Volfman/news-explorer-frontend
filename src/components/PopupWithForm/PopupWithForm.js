@@ -1,31 +1,19 @@
 /* eslint-disable react/prop-types */
 import React from "react";
-// import { useNavigate } from "react-router-dom";
 import "./PopupWithForm.css";
 
 function PopupWithForm({
   isOpen,
   onClose,
+  onOpen,
   name,
   title,
   children,
   buttonText,
   linkText,
-  onSignInPopupClick,
-  onSignUpPopupClick,
-  onInfoPopupClick,
-  onLoggedInClick,
+  submitHandler,
+  setValue,
 }) {
-  // const navigateTo = useNavigate();
-  // function linkToNews() {
-  //   navigateTo("/saved-news");
-  // }
-
-  function handleLoggedInState() {
-    onLoggedInClick(true)
-    console.log("zakrili popup")
-  }
-
   return (
     <div className={`popup popup_type_${name} ${isOpen && "popup__is-opened"}`}>
       <div className="popup__content">
@@ -36,7 +24,11 @@ function PopupWithForm({
           className="popup__close-button"
         />
         <h2 className="popup__title">{title}</h2>
-        <form onSubmit={() => handleLoggedInState()} name={name} className="popup__form">
+        <form
+          onSubmit={(evt) => submitHandler(evt)}
+          name={name}
+          className="popup__form"
+        >
           {children}
           <span
             id="input_type_profession-error"
@@ -45,7 +37,7 @@ function PopupWithForm({
             This email is not available
           </span>
           <button
-            onClick={() => { onInfoPopupClick()}}
+            onClick={setValue}
             aria-label="save"
             type="submit"
             name="popupSaveButton"
@@ -57,9 +49,11 @@ function PopupWithForm({
             or{" "}
             <button
               type="button"
-              onClick={onSignUpPopupClick || onSignInPopupClick}
+              onClick={onOpen}
               className="popup__link-words"
-            >{`${linkText}`}</button>
+            >
+              {linkText}
+            </button>
           </p>
         </form>
       </div>

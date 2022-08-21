@@ -70,6 +70,7 @@
 .popup-info__link-words {
   margin: 14px auto 51px 36px;
   border: none;
+  cursor: pointer;
   background-color: transparent;
   font-family: "Inter", sans-serif;
   font-size: 18px;

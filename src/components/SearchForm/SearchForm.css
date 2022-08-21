@@ -32,7 +32,6 @@
   color: #b6bcbf;
   outline: none;
   caret-color: #2f71e5;
-  /* backdrop-filter: blur(8px); */
 }
 
 .search-form__input:focus {

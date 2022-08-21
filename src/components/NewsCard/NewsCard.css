@@ -96,7 +96,9 @@
 .card__icon_button_trash:hover .card__icon-hover {
   display: flex;
 }
-
+.card__icon_button_flag:hover .card__icon-hover {
+  display: flex;
+}
 .card__icon_button_trash:hover {
   background-image: url("../../images/Trash_active.svg");
 }
@@ -105,8 +107,8 @@
   display: block;
 }
 
-.card__icon.card__icon_button_flag:active {
-  background-image: url("../../images/marked-bkm.svg");
+.card__icon_button_flag_active {
+  background-image: url("../../images/filled-bkm.svg");
 }
 
 .card__date {

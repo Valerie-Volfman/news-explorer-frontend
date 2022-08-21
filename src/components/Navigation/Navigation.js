@@ -5,40 +5,19 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import "./Navigation.css";
-import { ReactComponent as Exit } from "../../images/exit.svg";
-import { ReactComponent as ExitWhite} from "../../images/logout.svg";
+import exitIcon from "../../images/exit.svg";
+import exitIconWhite from "../../images/logout.svg";
 
 function Navigation({
-  onSignInPopupClick,
   onMobilePopupClickOpen,
   onClose,
-  buttonText,
-  name,
   loggedIn,
-  onLoggedInClick,
-  onLoggedOut,
+  handleLoggedUserClick,
+  handleNotLoggedUserClick,
 }) {
   const [isActive, setIsActive] = React.useState(false);
   const location = useLocation();
   const savedNewsPageLocation = location.pathname === "/saved-news";
-
-  
-function handleLoggedIn() {
-  onLoggedInClick(true)
-}
-
-function handleSignInClick() {
-  if (!loggedIn) {
-  onSignInPopupClick(true);
-  } if (loggedIn) {
-  handleLoggedIn()
-  }
-}
-
-  function handleSignOut() {
-    onLoggedOut(false)
-  }
-
 
   function handleMobilePopup() {
     if (isActive) {
@@ -47,7 +26,6 @@ function handleSignInClick() {
       onMobilePopupClickOpen();
     }
   }
-
 
   return (
     <div
@@ -60,31 +38,51 @@ function handleSignInClick() {
         <nav className="menu__navigation">
           <Link
             className={`menu__button menu__button_state_active ${
-              savedNewsPageLocation ? "menu__button_state_non-active" : "menu__button_state_active"
+              savedNewsPageLocation
+                ? "menu__button_state_non-active"
+                : "menu__button_state_active"
             }`}
             to="/"
           >
             Home
           </Link>
-          <Link
-            className={ `${loggedIn
-                ? "menu__button" : "menu__button_state_hidden" }` && `${!savedNewsPageLocation ? "menu__button menu__button_state_non-active"
-                : "menu__button_state_active" }` }
-            to="/saved-news"
-          >
-            Saved articles
-          </Link>
-          <button
-            type="submit"
-            onClick={() =>
-               `${!loggedIn ? handleSignInClick() : handleSignOut()}`}
-            className={`menu__main-button ${
-               loggedIn && "menu__main-button_type_small" || !loggedIn && "menu__main-button"
-               }`}
-          >
-            {loggedIn ? "Elise" : "Sign in" }
-          {`${loggedIn ?  `${<Exit />}`  : ""}` && `${savedNewsPageLocation ? <Exit /> : <ExitWhite />}` }
-          </button>
+          {loggedIn && (
+            <Link
+              className={
+                `${loggedIn ? "menu__button" : "menu__button_state_hidden"}` &&
+                `${
+                  !savedNewsPageLocation
+                    ? "menu__button menu__button menu__button_state_non-active"
+                    : "menu__button menu__button_state_active"
+                }`
+              }
+              to="/saved-news"
+            >
+              Saved articles
+            </Link>
+          )}
+          {loggedIn ? (
+            <button
+              onClick={handleLoggedUserClick}
+              type="button"
+              className="menu__main-button"
+            >
+              <p>Elise</p>
+              <img
+                className="menu__icon-exit"
+                src={savedNewsPageLocation ? exitIcon : exitIconWhite}
+                alt="logout"
+              />
+            </button>
+          ) : (
+            <button
+              onClick={handleNotLoggedUserClick}
+              type="button"
+              className="menu__main-button"
+            >
+              <p className="menu__signin-btn">Sign in</p>
+            </button>
+          )}
         </nav>
         <button
           type="button"

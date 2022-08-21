@@ -1,7 +1,3 @@
-svg {
-  margin-left: 17px;
-}
-
 .menu {
   max-width: 1440px;
   height: 80px;
@@ -68,8 +64,7 @@ svg {
   position: relative;
   pointer-events: visible;
   padding: 0;
-  margin: 0 42px;
-  min-width: fit-content;
+  margin: 0 16px;
 }
 
 .menu__button_state_hidden {
@@ -84,7 +79,7 @@ svg {
   text-underline-offset: 31px;
   padding: 0;
   color: inherit;
-  margin: 0 42px 0 0;
+  margin: 0 16px;
 }
 
 .menu__button_state_non-active {
@@ -94,9 +89,10 @@ svg {
 
 .menu__main-button {
   box-sizing: border-box;
-  width: 176px;
+  width: fit-content;
+  min-width: 112px;
+  padding: 12px;
   height: 48px;
-  padding: 0;
   margin: 0;
   display: flex;
   justify-content: center;
@@ -109,10 +105,12 @@ svg {
   color: inherit;
 }
 
-.menu__main-button_type_small {
-  width: 112px;
-  height: 48px;
-  margin: 0 auto 0 16px;
+.menu__signin-btn {
+  width: 152px;
+}
+
+.menu__icon-exit {
+  margin-left: 16px;
 }
 
 .menu__burger-button {
@@ -177,7 +175,7 @@ svg {
     margin: 0 16px;
   }
   .menu__button_state_active {
-    margin: 0 16px 0 0;
+    margin: 0 16px;
   }
 }
 
@@ -205,7 +203,7 @@ svg {
   }
   .menu__button {
     padding: 0;
-    margin: 0, 16px;
+    margin: 0 16px;
   }
   .menu__button_state_active {
     text-underline-offset: 25px;
@@ -213,15 +211,11 @@ svg {
     margin: 0 16px;
   }
   .menu__main-button {
-    width: 152px;
     height: 40px;
     margin-left: 16px;
   }
-  .menu__main-button_type_small {
-    width: 100px;
-    min-width: fit-content;
-    height: 40px;
-    color: inherit;
+  .menu__signin-btn {
+    width: 128px;
   }
   .menu__burger-button {
     position: absolute;

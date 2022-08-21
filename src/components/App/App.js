@@ -13,7 +13,7 @@ import PopupInput from "../PopupInput/PopupInput";
 import InfoPopup from "../InfoPopup/InfoPopup";
 import Navigation from "../Navigation/Navigation";
 import MobilePopup from "../MobilePopup/MobilePopup";
-import CurrentUserContext from "../../contexts/CurrentUserContext";
+// import CurrentUserContext from "../../contexts/CurrentUserContext";
 
 function App() {
   const [isSignInPopupOpen, setIsSignInPopupOpen] = React.useState(false);
@@ -30,20 +30,28 @@ function App() {
     setIsSearchResultOpen(true);
   }
 
+  function handleClearForm() {
+    document.addEventListener("submit", (evt) => {
+      evt.preventDefault();
+      evt.target.reset();
+    });
+  }
+
   function closeAllPopups() {
     setIsMobilePopupOpen(false);
     setIsSignInPopupOpen(false);
     setIsSignUpPopupOpen(false);
+    setIsInfoPopupOpen(false);
   }
 
-  function handleLoggedInClick() {
-    console.log("zashli!!!")
+  function handleSingInSubmit(evt) {
+    evt.preventDefault();
     setLoggedIn(true);
+    closeAllPopups();
   }
 
   function handleLoggedOutState() {
     setLoggedIn(false);
-    console.log("vishli:(((")
   }
 
   function handleMobilePopupClickOpen() {
@@ -56,19 +64,30 @@ function App() {
     setIsMobilePopupOpen(false);
   }
 
-  function handleInfoPopupClick() {
+  function handleInfoPopupClick(evt) {
+    evt.preventDefault();
     closeAllPopups();
     setIsInfoPopupOpen(true);
   }
-
-  function handleSignInClick() {
+  function openRegisterPopup() {
+    handleClearForm();
+    closeAllPopups();
+    setIsSignUpPopupOpen(true);
+  }
+  function openLoginPopup() {
+    handleClearForm();
     closeAllPopups();
     setIsSignInPopupOpen(true);
   }
-
-  function handleSignUpClick() {
+  function handleFormClick(boolean) {
     closeAllPopups();
-    setIsSignUpPopupOpen(true);
+    if (boolean) {
+      setIsSignInPopupOpen(true);
+      setIsSignUpPopupOpen(false);
+    } else {
+      setIsSignInPopupOpen(false);
+      setIsSignUpPopupOpen(true);
+    }
   }
 
   React.useEffect(() => {
@@ -77,10 +96,10 @@ function App() {
         closeAllPopups();
       }
     };
-    if (isSignInPopupOpen || isSignUpPopupOpen)
+    if (isSignInPopupOpen || isSignUpPopupOpen || isInfoPopupOpen)
       document.addEventListener("keydown", closeByEscape);
     return () => document.removeEventListener("keydown", closeByEscape);
-  }, [isSignInPopupOpen, isSignUpPopupOpen]);
+  }, [isSignInPopupOpen, isSignUpPopupOpen, isInfoPopupOpen]);
 
   React.useEffect(() => {
     const closeByClickOnScreen = (e) => {
@@ -91,29 +110,27 @@ function App() {
         }
       }
     };
-    if (isSignInPopupOpen || isSignUpPopupOpen)
+    if (isSignInPopupOpen || isSignUpPopupOpen || isInfoPopupOpen)
       document.addEventListener("mouseup", closeByClickOnScreen);
     return () => document.removeEventListener("mouseup", closeByClickOnScreen);
-  }, [isSignInPopupOpen, isSignUpPopupOpen]);
+  }, [isSignInPopupOpen, isSignUpPopupOpen, isInfoPopupOpen]);
 
   return (
     <div className={`app ${homePage ? "app_theme_dark" : ""}`}>
       <Navigation
-        name="Elise"
         loggedIn={loggedIn}
-        onLoggedInClick={() => handleLoggedInClick()}
-        onLoggedOut={() => handleLoggedOutState()}
-        onClose={() => closeAllPopups()}
-        onMobilePopupClickClose={() => handleMobilePopupClickClose()}
-        onMobilePopupClickOpen={() => handleMobilePopupClickOpen()}
-        onSignInPopupClick={() => handleSignInClick()}
+        onClose={closeAllPopups}
+        handleLoggedUserClick={handleLoggedOutState}
+        handleNotLoggedUserClick={openLoginPopup}
+        onMobilePopupClickClose={handleMobilePopupClickClose}
+        onMobilePopupClickOpen={handleMobilePopupClickOpen}
       />
       <Routes>
         <Route
           path="/"
           element={
             <Main
-              onClick={() => handleSearchResultClick}
+              onClick={handleSearchResultClick}
               isOpen={isSearchResultOpen}
             />
           }
@@ -122,11 +139,11 @@ function App() {
       </Routes>
       <About />
       <PopupWithForm
-      loggedIn={loggedIn}
-        onLoggedInClick={() => handleLoggedInClick()}
-        onSignUpPopupClick={() => handleSignUpClick()}
+        loggedIn={loggedIn}
+        onOpen={openRegisterPopup}
+        submitHandler={handleSingInSubmit}
         isOpen={isSignInPopupOpen}
-        onClose={() => closeAllPopups()}
+        onClose={closeAllPopups}
         name="sign-in"
         title="Sign in"
         buttonText="Sign in"
@@ -150,10 +167,12 @@ function App() {
         />
       </PopupWithForm>
       <PopupWithForm
-        onInfoPopupClick={() => handleInfoPopupClick()}
-        onSignInPopupClick={() => handleSignInClick()}
+        onInfoPopupClick={handleInfoPopupClick}
+        onSignInPopupClick={handleFormClick}
+        submitHandler={handleInfoPopupClick}
         isOpen={isSignUpPopupOpen}
-        onClose={() => closeAllPopups()}
+        onOpen={openLoginPopup}
+        onClose={closeAllPopups}
         name="sign-up"
         title="Sign up"
         buttonText="Sign up"
@@ -187,13 +206,14 @@ function App() {
       <InfoPopup
         name="info-popup"
         isOpen={isInfoPopupOpen}
-        onClose={() => closeAllPopups()}
+        onClose={closeAllPopups}
+        handleNotLoggedUserClick={openLoginPopup}
       />
       <MobilePopup
         name="mobile"
-        onSignInPopupClick={() => handleSignInClick()}
+        onSignInPopupClick={handleFormClick}
         isOpenMobile={isMobilePopupOpen}
-        onClose={() => closeAllPopups()}
+        onClose={closeAllPopups}
       />
       <Footer />
     </div>

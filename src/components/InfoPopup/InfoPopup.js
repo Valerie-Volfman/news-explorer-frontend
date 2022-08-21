@@ -3,7 +3,7 @@
 import React from "react";
 import "./InfoPopup.css";
 
-function InfoPopup({ isOpen, onClose, onInfoPopupClick, name }) {
+function InfoPopup({ isOpen, onClose, handleNotLoggedUserClick, name }) {
   return (
     <>
       <div
@@ -21,7 +21,7 @@ function InfoPopup({ isOpen, onClose, onInfoPopupClick, name }) {
           </p>
           <button
             type="button"
-            onClick={onInfoPopupClick}
+            onClick={handleNotLoggedUserClick}
             className="popup-info__link-words"
           >
             Sign in

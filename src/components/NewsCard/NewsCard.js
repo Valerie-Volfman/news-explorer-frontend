@@ -1,3 +1,4 @@
+/* eslint-disable no-shadow */
 /* eslint-disable no-console */
 /* eslint-disable jsx-a11y/control-has-associated-label */
 import React from "react";
@@ -5,8 +6,12 @@ import { useLocation } from "react-router-dom";
 import "./NewsCard.css";
 
 function NewsCard() {
+  const [isActive, setIsActive] = React.useState(false);
   const location = useLocation();
   const savedNewsPageLocation = location.pathname === "/saved-news";
+  function handleActiveButton() {
+    setIsActive((isActive) => !isActive);
+  }
   return (
     <article className="card">
       <div className="card__image">
@@ -19,17 +24,35 @@ function NewsCard() {
           Nature
         </button>
 
-        <button
-          onClick={() => console.log(location.pathname)}
-          type="button"
-          className={`card__icon ${
-            savedNewsPageLocation
-              ? "card__icon_button_trash"
-              : "card__icon_button_flag"
-          }`}
-        >
-          <span className="card__icon-hover">Sign in to save articles</span>
-        </button>
+        {!savedNewsPageLocation ? (
+          <button
+            onClick={handleActiveButton}
+            type="button"
+            className={`card__icon ${
+              !isActive
+                ? "card__icon_button_flag"
+                : "card__icon_button_flag_active"
+            }`}
+          >
+            <span className="card__icon-hover">
+              {savedNewsPageLocation
+                ? "Remove from saved"
+                : "Sign in to save article"}
+            </span>
+          </button>
+        ) : (
+          <button
+            onClick={handleActiveButton}
+            type="button"
+            className="card__icon card__icon_button_trash"
+          >
+            <span className="card__icon-hover">
+              {savedNewsPageLocation
+                ? "Remove from saved"
+                : "Sign in to save article"}
+            </span>
+          </button>
+        )}
       </div>
       <p className="card__date">November 4, 2020</p>
       <h3 className="card__title">
