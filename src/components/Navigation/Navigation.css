@@ -1,0 +1,289 @@
+.menu {
+  max-width: 1440px;
+  height: 80px;
+  text-align: center;
+  display: flex;
+  margin: 0;
+  padding: 0;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(196, 196, 196, 0.01);
+  box-shadow: inset 0px -1px 0px (255, 255, 255, 0.2);
+}
+
+.menu_theme_light {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 auto;
+  padding: 0;
+  max-width: 1440px;
+  box-shadow: inset 0px -1px 0px rgba(255, 255, 255, 0.2);
+}
+
+.menu__theme_dark {
+  background: #ffffff;
+  box-shadow: inset 0px -1px 0px #d1d2d6;
+}
+
+.menu__bg {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.menu__navigation {
+  display: flex;
+  margin: 0 104px 0 0;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 48px;
+  font-family: "Roboto", sans-serif;
+  font-size: 18px;
+  line-height: 24px;
+  font-weight: 500;
+}
+
+.menu__logo {
+  text-align: left;
+  padding: 0;
+  margin: 0 0 0 104px;
+  font-family: "Roboto Slab", sans-serif;
+  font-size: 20px;
+  line-height: 24px;
+  font-weight: 700;
+  text-decoration: none;
+  color: inherit;
+}
+
+.menu__button {
+  opacity: 1;
+  overflow: visible;
+  text-decoration: none;
+  position: relative;
+  pointer-events: visible;
+  padding: 0;
+  margin: 0 16px;
+}
+
+.menu__button_state_hidden {
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  pointer-events: none;
+}
+
+.menu__button_state_active {
+  text-decoration: underline solid 3px;
+  text-underline-offset: 31px;
+  padding: 0;
+  color: inherit;
+  margin: 0 16px;
+}
+
+.menu__button_state_non-active {
+  text-decoration: none;
+  color: inherit;
+}
+
+.menu__main-button {
+  box-sizing: border-box;
+  width: fit-content;
+  min-width: 112px;
+  padding: 12px;
+  height: 48px;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  border: 1px solid;
+  border-radius: 100px;
+  cursor: pointer;
+  background-color: transparent;
+  color: inherit;
+}
+
+.menu__signin-btn {
+  width: 152px;
+}
+
+.menu__icon-exit {
+  margin-left: 16px;
+}
+
+.menu__burger-button {
+  visibility: hidden;
+  overflow: hidden;
+  opacity: 0;
+  pointer-events: none;
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  margin-right: 16px;
+  display: flex;
+  position: absolute;
+  right: 0;
+  cursor: pointer;
+  border: none;
+  background-color: transparent;
+  transition: all 0.5s ease-in-out;
+  align-items: center;
+  padding: 0;
+}
+
+.menu__burger-button-line {
+  background-color: #fff;
+}
+
+.menu__burger-button-line::before {
+  content: "";
+  position: absolute;
+  top: 14px;
+  left: 0;
+  height: 2px;
+  width: 16px;
+  background-color: inherit;
+  transition: all 0.1s linear;
+}
+
+.menu__burger-button-line::after {
+  bottom: 14px;
+  content: "";
+  position: absolute;
+  height: 2px;
+  width: 16px;
+  left: 0;
+  background-color: inherit;
+  transition: all 0.1s linear;
+}
+.menu__burger-button_active {
+  width: 0;
+}
+.menu__burger-button_active::before {
+  transform: rotate(45deg);
+  top: 11px;
+}
+.menu__burger-button_active::after {
+  bottom: 11px;
+  transform: rotate(135deg);
+}
+
+@media (min-width: 849px) and (max-width: 1048px) {
+  .menu__button {
+    margin: 0 16px;
+  }
+  .menu__button_state_active {
+    margin: 0 16px;
+  }
+}
+
+@media (min-width: 638px) and (max-width: 848px) {
+  .menu {
+    width: 100%;
+    height: 66px;
+    justify-content: space-between;
+    padding: 0;
+  }
+  .menu__logo {
+    margin: 0 auto 0 40px;
+  }
+  .menu_theme_light {
+    width: 100%;
+  }
+  .menu__bg {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+  }
+  .menu__navigation {
+    font-size: 16px;
+    margin: 0 40px 0 auto;
+  }
+  .menu__button {
+    padding: 0;
+    margin: 0 16px;
+  }
+  .menu__button_state_active {
+    text-underline-offset: 25px;
+    padding: 0;
+    margin: 0 16px;
+  }
+  .menu__main-button {
+    height: 40px;
+    margin-left: 16px;
+  }
+  .menu__signin-btn {
+    width: 128px;
+  }
+  .menu__burger-button {
+    position: absolute;
+  }
+}
+
+@media (max-width: 637px) {
+  .menu {
+    justify-content: space-between;
+    min-width: 100vw;
+    height: 56px;
+    margin: 0 auto;
+    padding: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    top: 0;
+  }
+  .menu_theme_light {
+    max-width: 100vw;
+    min-width: 320px;
+  }
+
+  .menu__navigation {
+    position: absolute;
+  }
+
+  .menu__logo {
+    margin: 16px 0 16px 16px;
+    max-width: 117px;
+    font-size: 16px;
+  }
+
+  .menu__main-button {
+    visibility: hidden;
+    overflow: hidden;
+    opacity: 0;
+    position: absolute;
+    pointer-events: none;
+    height: 0px;
+    width: 0px;
+  }
+  .menu__button {
+    visibility: hidden;
+    overflow: hidden;
+    opacity: 0;
+    position: absolute;
+    pointer-events: none;
+    text-decoration: none;
+    width: 0px;
+    height: 0px;
+    margin: 16px auto 6px 16px;
+  }
+  .menu__burger-button {
+    visibility: visible;
+    overflow: visible;
+    opacity: 1;
+    pointer-events: visible;
+  }
+  .menu__burger-button-line_black {
+    background-color: #1a1b22;
+  }
+  .menu__button_state_active {
+    visibility: hidden;
+    overflow: hidden;
+    opacity: 0;
+    pointer-events: none;
+  }
+}

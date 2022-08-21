@@ -1,0 +1,47 @@
+@font-face {
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 400;
+    src: url('./roboto-v30-latin-regular.woff') format('woff'),
+    url('./roboto-v30-latin-regular.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 500;
+    src: url('./roboto-v30-latin-500.woff') format('woff'),
+    url('./roboto-v30-latin-500.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 700;
+    src: url('./roboto-v30-latin-700.woff') format('woff'),
+    url('./roboto-slab-v24-latin-700.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 900;
+    src: url('./roboto-v30-latin-900.woff') format('woff'),
+    url('./roboto-v30-latin-900.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'Roboto Slab';
+    font-style: normal;
+    font-weight: 400;
+    src: url('./roboto-slab-v24-latin-regular.woff') format('woff'),
+    url('./roboto-slab-v24-latin-regular.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'Roboto Slab';
+    font-style: normal;
+    font-weight: 700;
+    src: url('./roboto-slab-v24-latin-700.woff') format('woff'),
+    url('./roboto-slab-v24-latin-700.woff2') format('woff2');
+}

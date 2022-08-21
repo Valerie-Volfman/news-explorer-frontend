@@ -1,0 +1,10 @@
+@import url(./vendor/fonts/Inter/inter.css);
+@import url(./vendor/fonts/Roboto/roboto.css);
+@import url(./vendor/fonts/Source-Sans-Pro/source-sans-pro.css);
+@import url(./vendor/normalize.css);
+
+body {
+  max-width: 1440px;
+  display: block;
+  margin: auto;
+}
