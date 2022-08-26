@@ -4,15 +4,17 @@ import "./NewsCardList.css";
 import "../NewsCard/NewsCard.css";
 import NewsCard from "../NewsCard/NewsCard";
 
-function NewsCardList() {
+function NewsCardList({articles}) {
+  console.log(articles)
+  console.log(typeof(articles))
+  
   return (
     <div className="news-list">
-      <NewsCard />
-      <NewsCard />
-      <NewsCard />
-      <NewsCard />
-      <NewsCard />
+      {articles.map((item, index) => {
+      return <NewsCard key={index} item={item}/>
+    })}
     </div>
+    
   );
 }
 

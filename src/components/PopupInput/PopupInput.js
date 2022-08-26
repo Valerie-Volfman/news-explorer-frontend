@@ -11,10 +11,18 @@ function PopupInput({
   inputName,
   errorText,
 }) {
+
+  const [value, setValue] = React.useState("")
+
+  const handleChange = (evt) => {
+    setValue(evt.target.value)
+  }
   return (
     <>
       <p className="popup__input-title">{title}</p>
       <input
+      onChange={handleChange}
+      value={value}
         id={inputId}
         type={inputType}
         placeholder={`${placeholder}`}

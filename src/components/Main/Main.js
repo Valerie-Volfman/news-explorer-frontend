@@ -4,14 +4,13 @@ import SearchResults from "../SearchResults/SearchResults";
 import Header from "../Header/Header";
 import Preloader from "../Preloader/Preloader";
 import NothingFound from "../NothingFound/NothingFound";
-
-function Main() {
+function Main({ articles, onSearch, searchBlockIsOpen, isLoad }) {
   return (
     <>
-      <Header />
-      <Preloader />
-      <SearchResults />
-      <NothingFound />
+      <Header onSearch={onSearch} />
+      {isLoad ? <Preloader /> : ""}
+      {!isLoad && searchBlockIsOpen ? <SearchResults articles={articles}/> : !searchBlockIsOpen && !articles && <NothingFound />
+       }
     </>
   );
 }

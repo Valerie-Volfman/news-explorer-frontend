@@ -1,11 +1,8 @@
-/* eslint-disable no-shadow */
-/* eslint-disable no-console */
-/* eslint-disable jsx-a11y/control-has-associated-label */
 import React from "react";
 import { useLocation } from "react-router-dom";
 import "./NewsCard.css";
 
-function NewsCard() {
+function NewsCard({ item }) {
   const [isActive, setIsActive] = React.useState(false);
   const location = useLocation();
   const savedNewsPageLocation = location.pathname === "/saved-news";
@@ -14,14 +11,16 @@ function NewsCard() {
   }
   return (
     <article className="card">
-      <div className="card__image">
+      <div
+      style={{ backgroundImage: `url(${item.urlToImage})` }}
+       className="card__image">
         <button
           type="button"
           className={`card__keyword ${
             !savedNewsPageLocation && "card__keyword_hidden"
           }`}
         >
-          Nature
+          {item.source.name}
         </button>
 
         {!savedNewsPageLocation ? (
@@ -54,17 +53,14 @@ function NewsCard() {
           </button>
         )}
       </div>
-      <p className="card__date">November 4, 2020</p>
+      <p className="card__date">{item.publishedAt}</p>
       <h3 className="card__title">
-        Everyone Needs a Special &apos;Sit Spot&apos; in Nature
+        {item.title}
       </h3>
       <p className="card__text">
-        Ever since I read Richard Louv&apos;s influential book, &apos;Last Child
-        in the Woods,&apos; the idea of having a special &apos;sit spot&apos;
-        has stuck with me. This advice, which Louv attributes to nature educator
-        Jon Young, is for both adults and children to find...
+        {item.description}
       </p>
-      <p className="card__source">TREEHUGGER</p>
+      <p className="card__source">{item.author}</p>
     </article>
   );
 }

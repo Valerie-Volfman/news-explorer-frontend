@@ -103,8 +103,8 @@
 .popup__save-button:active {
   background-color: #2a65cc;
 }
-
-/* .popup__save-button_disabled {
+/* 
+.popup__save-button_disabled {
   background: #e6e8eb;
   color: #b6bcbf;
   pointer-events: none;
