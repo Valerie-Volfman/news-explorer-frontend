@@ -4,13 +4,34 @@ import SearchResults from "../SearchResults/SearchResults";
 import Header from "../Header/Header";
 import Preloader from "../Preloader/Preloader";
 import NothingFound from "../NothingFound/NothingFound";
-function Main({ articles, onSearch, searchBlockIsOpen, isLoad }) {
+import About from "../About/About";
+function Main({
+  articles,
+  onSearch,
+  isLoad,
+  isOpen,
+  loggedIn,
+  onCardDelete,
+  onCardSave,
+}) {
   return (
     <>
       <Header onSearch={onSearch} />
-      {isLoad ? <Preloader /> : ""}
-      {!isLoad && searchBlockIsOpen ? <SearchResults articles={articles}/> : !searchBlockIsOpen && !articles && <NothingFound />
-       }
+      {isOpen ? (
+        isLoad ? (
+          <Preloader />
+        ) : articles.length ? (
+          <SearchResults
+            articles={articles}
+            loggedIn={loggedIn}
+            onCardDelete={onCardDelete}
+            onCardSave={onCardSave}
+          />
+        ) : (
+          <NothingFound />
+        )
+      ) : null}
+      <About />
     </>
   );
 }

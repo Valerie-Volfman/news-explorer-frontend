@@ -6,7 +6,7 @@
   border-top: none;
   border-right: none;
   border-left: none;
-  margin: 0 auto 31px auto;
+  margin: 0 auto;
   width: 100%;
   font-family: "Inter", sans-serif;
   font-size: 14px;
@@ -54,8 +54,6 @@
 }
 
 .popup__input-error {
-  visibility: hidden;
-  display: none;
   color: #ff0000;
   font-size: 12px;
   line-height: 15px;
@@ -66,7 +64,6 @@
   visibility: visible;
   display: block;
 }
-
 @media (max-width: 768px) {
   .popup__input {
     max-width: 288px;

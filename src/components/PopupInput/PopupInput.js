@@ -8,32 +8,44 @@ function PopupInput({
   inputId,
   inputType,
   placeholder,
-  inputName,
-  errorText,
+  name,
+  isOpen,
+  setValues,
+  setIsValid,
+  values,
 }) {
-
-  const [value, setValue] = React.useState("")
-
-  const handleChange = (evt) => {
-    setValue(evt.target.value)
-  }
+  const [value, setValue] = React.useState("");
+  const [error, setError] = React.useState("");
+  React.useEffect(() => {
+    if (isOpen) {
+      setValue("");
+      setError("");
+      setValues({});
+    }
+  }, [isOpen, setValues]);
+  const handleChange = (e) => {
+    setValue(e.target.value);
+    setError(e.target.validationMessage);
+    setIsValid(e.target.closest("form").checkValidity());
+    setValues({ ...values, [e.target.name]: e.target.value });
+  };
   return (
     <>
       <p className="popup__input-title">{title}</p>
       <input
-      onChange={handleChange}
-      value={value}
+        onChange={handleChange}
+        value={value}
         id={inputId}
-        type={inputType}
-        placeholder={`${placeholder}`}
-        name={inputName}
+        type={name.toLowerCase()}
+        placeholder={placeholder}
+        name={name.toLowerCase()}
         minLength="4"
         maxLength="45"
         required
         className="popup__input popup__input_type_email"
       />
       <span id="input_type_card-title-error" className="popup__input-error">
-        {errorText}
+        {error}
       </span>
     </>
   );

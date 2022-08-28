@@ -1,3 +1,6 @@
 .saved-news {
   margin: 0 auto;
 }
+.saved-news-list {
+  background-color: transparent;
+}

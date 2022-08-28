@@ -15,6 +15,12 @@ function PopupWithForm({
   submitHandler,
   setValue,
 }) {
+  const [values, setValues] = React.useState({});
+  const [isValid, setIsValid] = React.useState(false);
+  function handleSubmit(evt) {
+    evt.preventDefault();
+    isValid && submitHandler(values);
+  }
   return (
     <div className={`popup popup_type_${name} ${isOpen && "popup__is-opened"}`}>
       <div className="popup__content">
@@ -26,17 +32,13 @@ function PopupWithForm({
         />
         <h2 className="popup__title">{title}</h2>
         <form
-          onSubmit={(evt) => submitHandler(evt)}
+          onSubmit={(evt) => handleSubmit(evt)}
           name={name}
           className="popup__form"
         >
-          {children}
-          <span
-            id="input_type_profession-error"
-            className="popup__input-error-main popup__input-error"
-          >
-            This email is not available
-          </span>
+          {React.Children.map(children, (child) =>
+            React.cloneElement(child, { setIsValid, setValues, values, isOpen })
+          )}
           <button
             onClick={setValue}
             aria-label="save"

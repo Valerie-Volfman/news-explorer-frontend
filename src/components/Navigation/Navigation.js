@@ -7,6 +7,7 @@ import { Link, useLocation } from "react-router-dom";
 import "./Navigation.css";
 import exitIcon from "../../images/exit.svg";
 import exitIconWhite from "../../images/logout.svg";
+import CurrentUserContext from "../../contexts/CurrentUserContext";
 
 function Navigation({
   onMobilePopupClickOpen,
@@ -15,6 +16,7 @@ function Navigation({
   handleLoggedUserClick,
   handleNotLoggedUserClick,
 }) {
+  const currentUser = React.useContext(CurrentUserContext);
   const [isActive, setIsActive] = React.useState(false);
   const location = useLocation();
   const savedNewsPageLocation = location.pathname === "/saved-news";
@@ -26,7 +28,6 @@ function Navigation({
       onMobilePopupClickOpen();
     }
   }
-
   return (
     <div
       className={`menu menu_theme_light ${
@@ -67,7 +68,7 @@ function Navigation({
               type="button"
               className="menu__main-button"
             >
-              <p>Elise</p>
+              <p>{currentUser.name}</p>
               <img
                 className="menu__icon-exit"
                 src={savedNewsPageLocation ? exitIcon : exitIconWhite}

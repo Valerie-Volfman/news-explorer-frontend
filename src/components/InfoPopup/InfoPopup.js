@@ -1,17 +1,19 @@
-/* eslint-disable react/prop-types */
-/* eslint-disable react/jsx-no-useless-fragment */
 import React from "react";
 import "./InfoPopup.css";
 
-function InfoPopup({ isOpen, onClose, handleNotLoggedUserClick, name }) {
+function InfoPopup({ isOpen, onClose, handleNotLoggedUserClick }) {
+    React.useEffect(() => {
+    },[isOpen]);
+    function handleClose() {
+        onClose();
+    }
   return (
-    <>
       <div
-        className={`popup popup_type_${name} ${isOpen && "popup__is-opened"}`}
+        className={`popup ${isOpen && "popup__is-opened"}`}
       >
         <div className="popup__content">
           <button
-            onClick={onClose}
+            onClick={handleClose}
             aria-label="close"
             type="button"
             className="popup__close-button"
@@ -28,7 +30,6 @@ function InfoPopup({ isOpen, onClose, handleNotLoggedUserClick, name }) {
           </button>
         </div>
       </div>
-    </>
   );
 }
 

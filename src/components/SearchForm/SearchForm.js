@@ -2,26 +2,26 @@ import React  from "react";
 import "./SearchForm.css";
 
 function SearchForm({onSearch}) {
-  const [name, isName] = React.useState(" ")
+  const [keyword, setKeyword] = React.useState("");
 
   function handleSubmit(evt) {
-    onSearch(name)
-    console.log(name)
     evt.preventDefault();
+    onSearch(keyword);
+    setKeyword("");
   }
 
-  function handleClick(evt) {
-    isName({name: evt.target.value})
+  function handleChange(evt) {
+    setKeyword(evt.target.value);
   }
 
   return (
     <form onSubmit={handleSubmit} className="search-form">
       <input
         className="search-form__input"
-        defaultValue="Enter topic"
         type="search"
-        value={isName.value}
-        onChange={handleClick}
+        value={keyword}
+        placeholder="Enter topic"
+        onChange={handleChange}
       />
       <button type="submit"  className="search-form__button">
         Search

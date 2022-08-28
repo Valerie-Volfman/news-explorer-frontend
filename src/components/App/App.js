@@ -1,6 +1,3 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable react/jsx-no-bind */
-/* eslint-disable import/no-duplicates */
 import React from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
 import "./App.css";
@@ -8,7 +5,6 @@ import Main from "../Main/Main";
 import SavedNews from "../SavedNews/SavedNews";
 import PopupWithForm from "../PopupWithForm/PopupWithForm";
 import Footer from "../Footer/Footer";
-import About from "../About/About";
 import PopupInput from "../PopupInput/PopupInput";
 import InfoPopup from "../InfoPopup/InfoPopup";
 import Navigation from "../Navigation/Navigation";
@@ -19,16 +15,16 @@ import {
   register,
   authorize,
   getUserData,
+  saveArticle,
+  deleteArticle,
+  getArticles,
 } from "../../utils/MainApi";
 import CurrentUserContext from "../../contexts/CurrentUserContext";
-import NothingFound from "../NothingFound/NothingFound";
-// import CurrentUserContext from "../../contexts/CurrentUserContext";
 
 function App() {
   const [isSignInPopupOpen, setIsSignInPopupOpen] = React.useState(false);
   const [isSignUpPopupOpen, setIsSignUpPopupOpen] = React.useState(false);
-  const [isSearchResultOpen, setIsSearchResultOpen] = React.useState(false);
-  const [isInfoPopupOpen, setIsInfoPopupOpen] = React.useState(false);
+  const [isInfoOpen, setIsInfoOpen] = React.useState(false);
   const [isMobilePopupOpen, setIsMobilePopupOpen] = React.useState(false);
   const [loggedIn, setLoggedIn] = React.useState(false);
   const [isSucceed, setIsSucceed] = React.useState(false);
@@ -38,6 +34,7 @@ function App() {
   const [searchBlockIsOpen, setSearchBlockIsOpen] = React.useState(false);
   const [isLoad, setIsLoad] = React.useState(false);
   const [currentUser, setCurrentUser] = React.useState({});
+  const [currentKeyword, setCurrentKeyword] = React.useState("");
 
   React.useEffect(() => {
     const token = localStorage.getItem("jwt");
@@ -51,8 +48,15 @@ function App() {
           }));
         })
         .catch((err) => console.log(err));
-  });
-
+  }, []);
+  React.useEffect(() => {
+    loggedIn &&
+      getArticles()
+        .then((res) => {
+          setCurrentUser((currentUser) => ({ ...currentUser, articles: res }));
+        })
+        .catch((err) => console.log(err));
+  }, [loggedIn]);
   React.useEffect(() => {
     loggedIn &&
       getUserData()
@@ -64,29 +68,42 @@ function App() {
         });
   }, [loggedIn]);
 
-  function searchArticle(data) {
+  function searchArticle(keyword) {
+    setCurrentKeyword(keyword);
+    setArticles([]);
     setIsLoad(true);
     setSearchBlockIsOpen(true);
-    console.log(data);
     api
-      .getArticles(data)
+      .getArticles(keyword)
       .then((data) => {
         setIsLoad(false);
-        console.log(data);
         setArticles(data.articles);
-        console.log(data.articles);
-        window.localStorage.setItem("name", data);
-        window.localStorage.getItem("name");
       })
       .catch((err) => {
         console.log(err);
       });
   }
-
-  function handleSearchResultClick() {
-    setIsSearchResultOpen(true);
+  function handleCardSave(card) {
+    saveArticle(currentKeyword, card)
+      .then((res) => {
+        setCurrentUser((currentUser) => ({
+          ...currentUser,
+          articles: [...currentUser.articles, res],
+        }));
+      })
+      .catch((err) => console.log(err));
   }
-
+  function handleCardDelete(id) {
+    deleteArticle(id)
+      .then((res) => {
+        const arr = currentUser.articles.filter((item) => item._id !== id);
+        setCurrentUser((currentUser) => ({
+          ...currentUser,
+          articles: arr,
+        }));
+      })
+      .catch((err) => console.log(err));
+  }
   function handleClearForm() {
     document.addEventListener("submit", (evt) => {
       evt.preventDefault();
@@ -98,14 +115,7 @@ function App() {
     setIsMobilePopupOpen(false);
     setIsSignInPopupOpen(false);
     setIsSignUpPopupOpen(false);
-    setIsInfoPopupOpen(false);
-  }
-
-  function handleSingInSubmit(evt) {
-    evt.preventDefault();
-    handleLogin();
-    setLoggedIn(true);
-    closeAllPopups();
+    setIsInfoOpen(false);
   }
 
   function handleMobilePopupClickOpen() {
@@ -118,11 +128,6 @@ function App() {
     setIsMobilePopupOpen(false);
   }
 
-  function handleInfoPopupClick(evt) {
-    evt.preventDefault();
-    closeAllPopups();
-    setIsInfoPopupOpen(true);
-  }
   function openRegisterPopup() {
     handleClearForm();
     closeAllPopups();
@@ -150,10 +155,10 @@ function App() {
         closeAllPopups();
       }
     };
-    if (isSignInPopupOpen || isSignUpPopupOpen || isInfoPopupOpen)
+    if (isSignInPopupOpen || isSignUpPopupOpen || isInfoOpen)
       document.addEventListener("keydown", closeByEscape);
     return () => document.removeEventListener("keydown", closeByEscape);
-  }, [isSignInPopupOpen, isSignUpPopupOpen, isInfoPopupOpen]);
+  }, [isSignInPopupOpen, isSignUpPopupOpen, isInfoOpen]);
 
   React.useEffect(() => {
     const closeByClickOnScreen = (e) => {
@@ -164,24 +169,20 @@ function App() {
         }
       }
     };
-    if (isSignInPopupOpen || isSignUpPopupOpen || isInfoPopupOpen)
+    if (isSignInPopupOpen || isSignUpPopupOpen || isInfoOpen)
       document.addEventListener("mouseup", closeByClickOnScreen);
     return () => document.removeEventListener("mouseup", closeByClickOnScreen);
-  }, [isSignInPopupOpen, isSignUpPopupOpen, isInfoPopupOpen]);
+  }, [isSignInPopupOpen, isSignUpPopupOpen, isInfoOpen]);
 
   function handleLogin(data) {
-    authorize({ data })
+    authorize(data)
       .then((res) => {
-        console.log("response", res);
         if (res.token) {
           setIsSucceed(true);
           setLoggedIn(true);
           localStorage.setItem("jwt", res.token);
-          setCurrentUser(data, ...currentUser);
-        } else {
-          setIsSucceed(false);
-          setLoggedIn(false);
         }
+        closeAllPopups();
       })
       .catch((err) => console.log(err));
   }
@@ -190,20 +191,20 @@ function App() {
     setLoggedIn(false);
     localStorage.removeItem("jwt");
     setCurrentUser({});
+    setArticles([]);
   }
 
-  function handleRegister({ email, password, name }) {
-    console.log({ email, password, name });
+  function handleRegister(data) {
     closeAllPopups();
-    register(email, password, name)
+    register({
+      email: data.email,
+      password: data.password,
+      name: data.username,
+    })
       .then((res) => {
-        console.log(res);
-        if (res.status === 201) {
           setIsSucceed(true);
-          setIsInfoPopupOpen(true);
-        } else {
-          setIsSucceed(false);
-        }
+          closeAllPopups();
+          setIsInfoOpen(true);
       })
       .catch((err) => console.log(err));
   }
@@ -225,25 +226,32 @@ function App() {
             element={
               <Main
                 isLoad={isLoad}
-                searchBlockIsOpen={searchBlockIsOpen}
                 onSearch={searchArticle}
-                onClick={handleSearchResultClick}
-                isOpen={isSearchResultOpen}
+                isOpen={searchBlockIsOpen}
                 articles={articles}
+                isSucceed={isSucceed}
+                loggedIn={loggedIn}
+                onCardDelete={handleCardDelete}
+                onCardSave={handleCardSave}
               />
             }
           />
           <Route
             path="/saved-news"
-            element={<SavedNews loggedIn={loggedIn} />}
+            element={
+              <SavedNews
+                loggedIn={loggedIn}
+                onCardDelete={handleCardDelete}
+                onCardSave={handleCardSave}
+              />
+            }
           />
         </Routes>
-        <About />
         <PopupWithForm
           handleLogin={handleLogin}
           loggedIn={loggedIn}
           onOpen={openRegisterPopup}
-          submitHandler={handleSingInSubmit}
+          submitHandler={handleLogin}
           isOpen={isSignInPopupOpen}
           onClose={closeAllPopups}
           name="sign-in"
@@ -256,16 +264,14 @@ function App() {
             id="input_type_email"
             type="email"
             placeholder="Enter email"
-            name="popupSignInEmail"
-            errorText="Invalid email address"
+            name="Email"
           />
           <PopupInput
             title="Password"
             id="input_type_password"
             type="password"
             placeholder="Enter password"
-            name="popupSignInPassword"
-            errorText="Invalid password"
+            name="Password"
           />
         </PopupWithForm>
         <PopupWithForm
@@ -284,32 +290,24 @@ function App() {
             id="input_type_email"
             type="email"
             placeholder="Enter email"
-            name="popupSignUpEmail"
-            errorText="Invalid email address"
+            name="Email"
           />
           <PopupInput
             title="Password"
             id="input_type_password"
             type="password"
             placeholder="Enter password"
-            name="popupSignUpPassword"
-            errorText="Invalid password"
+            name="Password"
           />
           <PopupInput
             title="Username"
             id="input_type_username"
             type="text"
             placeholder="Enter your username"
-            name="popupSignUpUsername"
-            errorText="Invalid username"
+            name="Username"
           />
         </PopupWithForm>
-        <InfoPopup
-          name="info-popup"
-          isOpen={isInfoPopupOpen}
-          onClose={closeAllPopups}
-          handleNotLoggedUserClick={openLoginPopup}
-        />
+      <InfoPopup isOpen={isInfoOpen} onClose={closeAllPopups} handleNotLoggedUserClick={openLoginPopup}/>
         <MobilePopup
           name="mobile"
           onSignInPopupClick={handleFormClick}
