@@ -10,7 +10,6 @@ import exitIconWhite from "../../images/logout.svg";
 import CurrentUserContext from "../../contexts/CurrentUserContext";
 
 function Navigation({
-  onMobilePopupClickOpen,
   onClose,
   loggedIn,
   handleLoggedUserClick,
@@ -23,20 +22,19 @@ function Navigation({
 
   function handleMobilePopup() {
     if (isActive) {
+      console.log(isActive)
       onClose();
-    } else {
-      onMobilePopupClickOpen();
     }
   }
   return (
     <div
-      className={`menu menu_theme_light ${
-        savedNewsPageLocation && "menu__theme_dark"
+      className={`${!isActive ? "menu_state_hidden" : "menu menu_theme_light"} ${
+        savedNewsPageLocation && isActive ? "menu-mb_theme_light" : ""
       }`}
     >
-      <div className="menu__bg">
+      <div className={`menu__bg ${savedNewsPageLocation ? "menu__bg_theme_light" : ""} ${!isActive ? "menu__bg_hidden" : ""}`}>
         <Link to="/" className="menu__logo">NewsExplorer</Link>
-        <nav className="menu__navigation">
+        <nav className={`menu__navigation ${!isActive ? "menu__navigation_state_hidden" : ""}`}>
           <Link
             className={`menu__button menu__button_state_active ${
               savedNewsPageLocation
@@ -71,7 +69,7 @@ function Navigation({
               <p>{currentUser.name}</p>
               <img
                 className="menu__icon-exit"
-                src={savedNewsPageLocation ? exitIcon : exitIconWhite}
+                src={savedNewsPageLocation ? exitIcon : exitIconWhite || `${isActive && exitIconWhite}` }
                 alt="logout"
               />
             </button>

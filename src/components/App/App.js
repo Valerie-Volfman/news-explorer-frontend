@@ -8,7 +8,6 @@ import Footer from "../Footer/Footer";
 import PopupInput from "../PopupInput/PopupInput";
 import InfoPopup from "../InfoPopup/InfoPopup";
 import Navigation from "../Navigation/Navigation";
-import MobilePopup from "../MobilePopup/MobilePopup";
 import api from "../../utils/NewsApi";
 import {
   checkToken,
@@ -25,7 +24,6 @@ function App() {
   const [isSignInPopupOpen, setIsSignInPopupOpen] = React.useState(false);
   const [isSignUpPopupOpen, setIsSignUpPopupOpen] = React.useState(false);
   const [isInfoOpen, setIsInfoOpen] = React.useState(false);
-  const [isMobilePopupOpen, setIsMobilePopupOpen] = React.useState(false);
   const [loggedIn, setLoggedIn] = React.useState(false);
   const [isSucceed, setIsSucceed] = React.useState(false);
   const [articles, setArticles] = React.useState([]);
@@ -112,20 +110,13 @@ function App() {
   }
 
   function closeAllPopups() {
-    setIsMobilePopupOpen(false);
     setIsSignInPopupOpen(false);
     setIsSignUpPopupOpen(false);
     setIsInfoOpen(false);
   }
 
-  function handleMobilePopupClickOpen() {
-    closeAllPopups();
-    setIsMobilePopupOpen(true);
-  }
-
   function handleMobilePopupClickClose() {
     closeAllPopups();
-    setIsMobilePopupOpen(false);
   }
 
   function openRegisterPopup() {
@@ -218,7 +209,6 @@ function App() {
           handleLoggedUserClick={handleLoggedOut}
           handleNotLoggedUserClick={openLoginPopup}
           onMobilePopupClickClose={handleMobilePopupClickClose}
-          onMobilePopupClickOpen={handleMobilePopupClickOpen}
         />
         <Routes>
           <Route
@@ -308,12 +298,6 @@ function App() {
           />
         </PopupWithForm>
       <InfoPopup isOpen={isInfoOpen} onClose={closeAllPopups} handleNotLoggedUserClick={openLoginPopup}/>
-        <MobilePopup
-          name="mobile"
-          onSignInPopupClick={handleFormClick}
-          isOpenMobile={isMobilePopupOpen}
-          onClose={closeAllPopups}
-        />
         <Footer />
       </CurrentUserContext.Provider>
     </div>

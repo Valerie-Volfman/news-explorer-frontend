@@ -27,6 +27,7 @@
   color: #b6bcbf;
   outline: none;
   caret-color: #2f71e5;
+  z-index: 0;
 }
 
 .search-form__input:focus {

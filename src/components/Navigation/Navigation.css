@@ -32,7 +32,14 @@
   flex-direction: row;
   align-items: center;
   width: 100%;
+  height: 80px;
   justify-content: space-between;
+  background: rgba(196, 196, 196, 0.01);
+  box-shadow: inset 0px -1px 0px rgba(255, 255, 255, 0.2);
+}
+
+.menu__bg_theme_light {
+  box-shadow: inset 0px -1px 0px rgba(8, 29, 45, 0.3);
 }
 
 .menu__navigation {
@@ -197,6 +204,7 @@
   .menu__bg {
     display: flex;
     width: 100%;
+    height: 66px;
     justify-content: space-between;
   }
   .menu__navigation {
@@ -226,52 +234,115 @@
 
 @media (max-width: 637px) {
   .menu {
+    position: fixed;
+    align-items: flex-start;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.5);
     justify-content: space-between;
     min-width: 100vw;
-    height: 56px;
+    height: 100vh;
     margin: 0 auto;
     padding: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    top: 0;
+    z-index: 99999;
+    visibility: visible;
+    overflow: visible;
+    opacity: 1;
+    pointer-events: visible;
   }
+
+  .menu_state_hidden {
+    position: relative;
+    background-color: none;
+  }
+
   .menu_theme_light {
     max-width: 100vw;
     min-width: 320px;
   }
 
+  .menu-mb_theme_light {
+    color: #fff;
+  }
+
   .menu__navigation {
-    position: absolute;
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin: 56px auto 0 auto;
+    padding-top: 16px;
+    padding-bottom: 22px;
+    visibility: visible;
+    overflow: visible;
+    opacity: 1;
+    pointer-events: visible;
+    box-shadow: 0px -1px 0px rgba(255, 255, 255, 0.2);
+  }
+
+  .menu__navigation_state_hidden {
+    visibility: hidden;
+    overflow: hidden;
+    opacity: 0;
+    pointer-events: hidden;
+  }
+
+  .menu__bg {
+    top: 0;
+    height: fit-content;
+    background-color: rgba(26, 27, 34, 1);
+    min-width: 100vw;
+    overflow: visible;
+  }
+
+  .menu__bg_hidden {
+    overflow: hidden;
+    height: 56px;
+    background: rgba(196, 196, 196, 0.01);
   }
 
   .menu__logo {
-    margin: 16px 0 16px 16px;
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    margin: 0;
     max-width: 117px;
     font-size: 16px;
   }
 
   .menu__main-button {
-    visibility: hidden;
-    overflow: hidden;
-    opacity: 0;
-    position: absolute;
-    pointer-events: none;
-    height: 0px;
-    width: 0px;
+    margin: 22px auto 0 auto;
+    width: 288px;
+    height: 56px;
+    top: 0;
+    left: 0;
+    right: 0;
   }
+
   .menu__button {
+    text-decoration: none;
+    width: 288px;
+    height: 56px;
+    text-align: left;
+    margin: 16px auto 6px 16px;
+    visibility: visible;
+    overflow: visible;
+    opacity: 1;
+    pointer-events: visible;
+  }
+
+  .menu__button_state_hidden {
     visibility: hidden;
     overflow: hidden;
     opacity: 0;
-    position: absolute;
-    pointer-events: none;
-    text-decoration: none;
-    width: 0px;
-    height: 0px;
-    margin: 16px auto 6px 16px;
+    pointer-events: hidden;
   }
+
   .menu__burger-button {
+    top: 0;
+    margin-top: 16px;
     visibility: visible;
     overflow: visible;
     opacity: 1;
@@ -280,10 +351,7 @@
   .menu__burger-button-line_black {
     background-color: #1a1b22;
   }
-  .menu__button_state_active {
-    visibility: hidden;
-    overflow: hidden;
-    opacity: 0;
-    pointer-events: none;
+  .menu__burger-button_active {
+    background-color: #fff;
   }
 }
