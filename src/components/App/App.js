@@ -193,9 +193,9 @@ function App() {
       name: data.username,
     })
       .then((res) => {
-          setIsSucceed(true);
-          closeAllPopups();
-          setIsInfoOpen(true);
+        setIsSucceed(true);
+        closeAllPopups();
+        setIsInfoOpen(true);
       })
       .catch((err) => console.log(err));
   }
@@ -297,7 +297,11 @@ function App() {
             name="Username"
           />
         </PopupWithForm>
-      <InfoPopup isOpen={isInfoOpen} onClose={closeAllPopups} handleNotLoggedUserClick={openLoginPopup}/>
+        <InfoPopup
+          isOpen={isInfoOpen}
+          onClose={closeAllPopups}
+          handleNotLoggedUserClick={openLoginPopup}
+        />
         <Footer />
       </CurrentUserContext.Provider>
     </div>

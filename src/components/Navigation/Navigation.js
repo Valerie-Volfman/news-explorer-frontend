@@ -22,19 +22,29 @@ function Navigation({
 
   function handleMobilePopup() {
     if (isActive) {
-      console.log(isActive)
+      console.log(isActive);
       onClose();
     }
   }
   return (
     <div
-      className={`${!isActive ? "menu_state_hidden" : "menu menu_theme_light"} ${
-        savedNewsPageLocation && isActive ? "menu-mb_theme_light" : ""
-      }`}
+      className={`${
+        !isActive ? "menu_state_hidden" : "menu menu_theme_light"
+      } ${savedNewsPageLocation && isActive ? "menu-mb_theme_light" : ""}`}
     >
-      <div className={`menu__bg ${savedNewsPageLocation ? "menu__bg_theme_light" : ""} ${!isActive ? "menu__bg_hidden" : ""}`}>
-        <Link to="/" className="menu__logo">NewsExplorer</Link>
-        <nav className={`menu__navigation ${!isActive ? "menu__navigation_state_hidden" : ""}`}>
+      <div
+        className={`menu__bg ${
+          savedNewsPageLocation ? "menu__bg_theme_light" : ""
+        } ${!isActive ? "menu__bg_hidden" : ""}`}
+      >
+        <Link to="/" className="menu__logo">
+          NewsExplorer
+        </Link>
+        <nav
+          className={`menu__navigation ${
+            !isActive ? "menu__navigation_state_hidden" : ""
+          }`}
+        >
           <Link
             className={`menu__button menu__button_state_active ${
               savedNewsPageLocation
@@ -69,7 +79,11 @@ function Navigation({
               <p>{currentUser.name}</p>
               <img
                 className="menu__icon-exit"
-                src={savedNewsPageLocation ? exitIcon : exitIconWhite || `${isActive && exitIconWhite}` }
+                src={
+                  savedNewsPageLocation
+                    ? exitIcon
+                    : exitIconWhite || `${isActive && exitIconWhite}`
+                }
                 alt="logout"
               />
             </button>
