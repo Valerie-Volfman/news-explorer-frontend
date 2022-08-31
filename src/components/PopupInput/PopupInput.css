@@ -41,11 +41,15 @@
 
 .popup__input-title {
   padding: 0;
-  margin: 0;
+  margin: 13px 0 0 0;
   color: #2f71e5;
   font-size: 12px;
   line-height: 15px;
   font-weight: 400;
+}
+
+.popup__input-title:first-child {
+  margin: 0;
 }
 
 .popup__input-error-main {

@@ -1,5 +1,5 @@
 /* eslint-disable no-undef */
-export const BASE_URL = "http://localhost:3001";
+export const BASE_URL = "https://api.news-explorer-valerie-v.students.nomoredomainssbs.ru";
 
 function generateHeaders() {
   const jwt = localStorage.getItem("jwt");

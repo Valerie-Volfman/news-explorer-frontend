@@ -21,6 +21,11 @@ function PopupWithForm({
     evt.preventDefault();
     isValid && submitHandler(values);
   }
+
+  React.useEffect(() => {
+    setValues({})
+}, [isOpen]);
+
   return (
     <div className={`popup popup_type_${name} ${isOpen && "popup__is-opened"}`}>
       <div className="popup__content">

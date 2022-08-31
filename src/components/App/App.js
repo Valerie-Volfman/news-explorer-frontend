@@ -102,12 +102,6 @@ function App() {
       })
       .catch((err) => console.log(err));
   }
-  function handleClearForm() {
-    document.addEventListener("submit", (evt) => {
-      evt.preventDefault();
-      evt.target.reset();
-    });
-  }
 
   function closeAllPopups() {
     setIsSignInPopupOpen(false);
@@ -120,12 +114,10 @@ function App() {
   }
 
   function openRegisterPopup() {
-    handleClearForm();
     closeAllPopups();
     setIsSignUpPopupOpen(true);
   }
   function openLoginPopup() {
-    handleClearForm();
     closeAllPopups();
     setIsSignInPopupOpen(true);
   }
