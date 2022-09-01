@@ -4,7 +4,7 @@ import NewsCardList from "../NewsCardList/NewsCardList";
 import NewsCard from "../NewsCard/NewsCard";
 import "./SearchResults.css";
 
-function SearchResults({ articles, loggedIn, onCardDelete, onCardSave }) {
+function SearchResults({ articles, loggedIn, onCardDelete, onCardSave, onOpenRegisterPopup }) {
   const [counter, setCounter] = React.useState(3);
   const [currentArticles, setCurrentArticles] = React.useState([]);
   const [isHidden, setIsHidden] = React.useState(false);
@@ -27,6 +27,7 @@ function SearchResults({ articles, loggedIn, onCardDelete, onCardSave }) {
                 loggedIn={loggedIn}
                 onCardDelete={onCardDelete}
                 onCardSave={onCardSave}
+                onOpenRegisterPopup={onOpenRegisterPopup}
               />
             );
           })}

@@ -207,6 +207,7 @@ function App() {
             path="/"
             element={
               <Main
+              onOpenRegisterPopup={openRegisterPopup}
                 isLoad={isLoad}
                 onSearch={searchArticle}
                 isOpen={searchBlockIsOpen}
