@@ -146,11 +146,8 @@ function App() {
   React.useEffect(() => {
     const closeByClickOnScreen = (e) => {
       if (e.target.matches(".popup")) {
-        const popup = document.querySelectorAll(".popup");
-        if (e.target !== popup) {
           closeAllPopups();
         }
-      }
     };
     if (isSignInPopupOpen || isSignUpPopupOpen || isInfoOpen)
       document.addEventListener("mouseup", closeByClickOnScreen);
@@ -207,7 +204,7 @@ function App() {
             path="/"
             element={
               <Main
-              onOpenRegisterPopup={openRegisterPopup}
+                onOpenRegisterPopup={openRegisterPopup}
                 isLoad={isLoad}
                 onSearch={searchArticle}
                 isOpen={searchBlockIsOpen}
