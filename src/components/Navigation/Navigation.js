@@ -20,11 +20,6 @@ function Navigation({
   const location = useLocation();
   const savedNewsPageLocation = location.pathname === "/saved-news";
 
-  function handleMobilePopup() {
-    if (isActive) {
-      onClose();
-    }
-  }
   return (
     <div
       className={`${
@@ -98,7 +93,7 @@ function Navigation({
         </nav>
         <button
           type="button"
-          onClick={() => `${handleMobilePopup()}` && setIsActive(!isActive)}
+          onClick={() => setIsActive(!isActive)}
           className="menu__burger-button"
         >
           <span
