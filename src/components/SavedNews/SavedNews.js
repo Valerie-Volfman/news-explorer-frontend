@@ -17,11 +17,16 @@ function SavedNews({ loggedIn, onCardDelete, onCardSave }) {
     <div className="saved-news">
       <SavedNewsHeader />
       <div className="news-list saved-news-list">
-      {currentUser.articles &&
-        currentUser.articles.map((item) => (
-          <NewsCard key={item._id} card={item} onCardDelete={onCardDelete} oncardSave={onCardSave}/>
-        ))}
-        </div>
+        {currentUser.articles &&
+          currentUser.articles.map((item) => (
+            <NewsCard
+              key={item._id}
+              card={item}
+              onCardDelete={onCardDelete}
+              oncardSave={onCardSave}
+            />
+          ))}
+      </div>
     </div>
   );
 }

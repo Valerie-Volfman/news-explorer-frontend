@@ -1,7 +1,7 @@
-import React  from "react";
+import React from "react";
 import "./SearchForm.css";
 
-function SearchForm({onSearch}) {
+function SearchForm({ onSearch }) {
   const [keyword, setKeyword] = React.useState("");
 
   function handleSubmit(evt) {
@@ -23,7 +23,7 @@ function SearchForm({onSearch}) {
         placeholder="Enter topic"
         onChange={handleChange}
       />
-      <button type="submit"  className="search-form__button">
+      <button type="submit" className="search-form__button">
         Search
       </button>
     </form>

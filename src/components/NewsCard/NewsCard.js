@@ -3,20 +3,26 @@ import { useLocation } from "react-router-dom";
 import CurrentUserContext from "../../contexts/CurrentUserContext";
 import "./NewsCard.css";
 
-function NewsCard({ card, loggedIn, onCardSave, onCardDelete, onOpenRegisterPopup }) {
+function NewsCard({
+  card,
+  loggedIn,
+  onCardSave,
+  onCardDelete,
+  onOpenRegisterPopup,
+}) {
   const currentUser = React.useContext(CurrentUserContext);
   const [isActive, setIsActive] = React.useState(false);
   const location = useLocation();
   const savedNewsPageLocation = location.pathname === "/saved-news";
   function handleActiveButton() {
     if (loggedIn) {
-    isActive ? onCardDelete(getCardId()) : onCardSave(card);
-    setIsActive((isActive) => !isActive);
+      isActive ? onCardDelete(getCardId()) : onCardSave(card);
+      setIsActive((isActive) => !isActive);
     } else {
-      onOpenRegisterPopup()
+      onOpenRegisterPopup();
     }
   }
-  
+
   React.useEffect(() => {
     currentUser.articles &&
       currentUser.articles.some((item) => item.title === card.title) &&
@@ -84,7 +90,7 @@ function NewsCard({ card, loggedIn, onCardSave, onCardDelete, onOpenRegisterPopu
           </button>
         ) : (
           <button
-            onClick={()=>onCardDelete(card._id)}
+            onClick={() => onCardDelete(card._id)}
             type="button"
             className="card__icon card__icon_button_trash"
           >

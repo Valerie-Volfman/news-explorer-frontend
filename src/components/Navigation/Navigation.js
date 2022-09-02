@@ -22,7 +22,6 @@ function Navigation({
 
   function handleMobilePopup() {
     if (isActive) {
-      console.log(isActive);
       onClose();
     }
   }

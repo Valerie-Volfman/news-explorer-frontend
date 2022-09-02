@@ -10,11 +10,11 @@
 }
 
 .about__avatar {
-  background-image: url("../../images/avatar.jpg");
+  background-image: url("../../images/me.jpeg");
   background-repeat: no-repeat;
   object-fit: cover;
   background-size: contain;
-  border-radius: 200px/200px;
+  border-radius: 500px;
   width: 100%;
   height: auto;
   width: 464px;

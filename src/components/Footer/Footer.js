@@ -16,7 +16,7 @@ function Footer() {
           </li>
           <li>
             <a
-            className="footer__link_yandex"
+              className="footer__link_yandex"
               rel="noreferrer"
               target="_blank"
               href="https://practicum.com/en-isr/?gclid=Cj0KCQjw3eeXBhD7ARIsAHjssr-7pMtZjdyH7yXG1aaKJxXzQhn-B2L7wfaM9fqZt5Q86NOzOZ9TJdAaAsxAEALw_wcB"

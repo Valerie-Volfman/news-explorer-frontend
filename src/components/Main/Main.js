@@ -13,7 +13,7 @@ function Main({
   loggedIn,
   onCardDelete,
   onCardSave,
-  onOpenRegisterPopup
+  onOpenRegisterPopup,
 }) {
   return (
     <>
@@ -23,7 +23,7 @@ function Main({
           <Preloader />
         ) : articles.length ? (
           <SearchResults
-          onOpenRegisterPopup={onOpenRegisterPopup}
+            onOpenRegisterPopup={onOpenRegisterPopup}
             articles={articles}
             loggedIn={loggedIn}
             onCardDelete={onCardDelete}

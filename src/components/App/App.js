@@ -9,6 +9,9 @@ import PopupInput from "../PopupInput/PopupInput";
 import InfoPopup from "../InfoPopup/InfoPopup";
 import Navigation from "../Navigation/Navigation";
 import api from "../../utils/NewsApi";
+import Login from "../Login/Login";
+import Register from "../Register/Register";
+
 import {
   checkToken,
   register,
@@ -33,6 +36,7 @@ function App() {
   const [isLoad, setIsLoad] = React.useState(false);
   const [currentUser, setCurrentUser] = React.useState({});
   const [currentKeyword, setCurrentKeyword] = React.useState("");
+  const [signError, setSignError] = React.useState("");
 
   React.useEffect(() => {
     const token = localStorage.getItem("jwt");
@@ -114,10 +118,12 @@ function App() {
   }
 
   function openRegisterPopup() {
+    setSignError("");
     closeAllPopups();
     setIsSignUpPopupOpen(true);
   }
   function openLoginPopup() {
+    setSignError("");
     closeAllPopups();
     setIsSignInPopupOpen(true);
   }
@@ -132,28 +138,6 @@ function App() {
     }
   }
 
-  React.useEffect(() => {
-    const closeByEscape = (e) => {
-      if (e.key === "Escape") {
-        closeAllPopups();
-      }
-    };
-    if (isSignInPopupOpen || isSignUpPopupOpen || isInfoOpen)
-      document.addEventListener("keydown", closeByEscape);
-    return () => document.removeEventListener("keydown", closeByEscape);
-  }, [isSignInPopupOpen, isSignUpPopupOpen, isInfoOpen]);
-
-  React.useEffect(() => {
-    const closeByClickOnScreen = (e) => {
-      if (e.target.matches(".popup")) {
-          closeAllPopups();
-        }
-    };
-    if (isSignInPopupOpen || isSignUpPopupOpen || isInfoOpen)
-      document.addEventListener("mouseup", closeByClickOnScreen);
-    return () => document.removeEventListener("mouseup", closeByClickOnScreen);
-  }, [isSignInPopupOpen, isSignUpPopupOpen, isInfoOpen]);
-
   function handleLogin(data) {
     authorize(data)
       .then((res) => {
@@ -164,7 +148,7 @@ function App() {
         }
         closeAllPopups();
       })
-      .catch((err) => console.log(err));
+      .catch((err) => setSignError(err));
   }
 
   function handleLoggedOut() {
@@ -227,66 +211,40 @@ function App() {
             }
           />
         </Routes>
-        <PopupWithForm
-          handleLogin={handleLogin}
-          loggedIn={loggedIn}
-          onOpen={openRegisterPopup}
-          submitHandler={handleLogin}
-          isOpen={isSignInPopupOpen}
-          onClose={closeAllPopups}
-          name="sign-in"
-          title="Sign in"
-          buttonText="Sign in"
-          linkText="Sign up"
-        >
-          <PopupInput
-            title="Email"
-            id="input_type_email"
-            type="email"
-            placeholder="Enter email"
-            name="Email"
-          />
-          <PopupInput
-            title="Password"
-            id="input_type_password"
-            type="password"
-            placeholder="Enter password"
-            name="Password"
-          />
-        </PopupWithForm>
-        <PopupWithForm
-          onSignInPopupClick={handleFormClick}
-          submitHandler={handleRegister}
-          isOpen={isSignUpPopupOpen}
-          onOpen={openLoginPopup}
-          onClose={closeAllPopups}
-          name="sign-up"
-          title="Sign up"
-          buttonText="Sign up"
-          linkText="Sign in"
-        >
-          <PopupInput
-            title="Email"
-            id="input_type_email"
-            type="email"
-            placeholder="Enter email"
-            name="Email"
-          />
-          <PopupInput
-            title="Password"
-            id="input_type_password"
-            type="password"
-            placeholder="Enter password"
-            name="Password"
-          />
-          <PopupInput
-            title="Username"
-            id="input_type_username"
-            type="text"
-            placeholder="Enter your username"
-            name="Username"
-          />
-        </PopupWithForm>
+        <Login>
+          <PopupWithForm
+            isOpen={isSignInPopupOpen}
+            onClose={closeAllPopups}
+            onOpen={openRegisterPopup}
+            name="sign-in"
+            title="Sign in"
+            linkText="Sign up"
+            buttonText="Sign in"
+            submitHandler={handleLogin}
+            signError={signError}
+          >
+            <PopupInput title="Email" type="email" name="email" />
+            <PopupInput title="Password" type="password" name="password" />
+          </PopupWithForm>
+        </Login>
+        <Register>
+          <PopupWithForm
+            onSignInPopupClick={handleFormClick}
+            submitHandler={handleRegister}
+            isOpen={isSignUpPopupOpen}
+            onOpen={openLoginPopup}
+            onClose={closeAllPopups}
+            name="sign-up"
+            title="Sign up"
+            buttonText="Sign up"
+            linkText="Sign in"
+            signError={signError}
+          >
+            <PopupInput title="Email" type="email" name="email" />
+            <PopupInput title="Password" type="password" name="password" />
+            <PopupInput title="Username" type="text" name="username" />
+          </PopupWithForm>
+        </Register>
         <InfoPopup
           isOpen={isInfoOpen}
           onClose={closeAllPopups}
