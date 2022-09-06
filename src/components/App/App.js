@@ -1,6 +1,3 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable react/jsx-no-bind */
-/* eslint-disable import/no-duplicates */
 import React from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
 import "./App.css";
@@ -8,74 +5,125 @@ import Main from "../Main/Main";
 import SavedNews from "../SavedNews/SavedNews";
 import PopupWithForm from "../PopupWithForm/PopupWithForm";
 import Footer from "../Footer/Footer";
-import About from "../About/About";
 import PopupInput from "../PopupInput/PopupInput";
 import InfoPopup from "../InfoPopup/InfoPopup";
 import Navigation from "../Navigation/Navigation";
-import MobilePopup from "../MobilePopup/MobilePopup";
-// import CurrentUserContext from "../../contexts/CurrentUserContext";
+import api from "../../utils/NewsApi";
+import Login from "../Login/Login";
+import Register from "../Register/Register";
+
+import {
+  checkToken,
+  register,
+  authorize,
+  getUserData,
+  saveArticle,
+  deleteArticle,
+  getArticles,
+} from "../../utils/MainApi";
+import CurrentUserContext from "../../contexts/CurrentUserContext";
 
 function App() {
   const [isSignInPopupOpen, setIsSignInPopupOpen] = React.useState(false);
   const [isSignUpPopupOpen, setIsSignUpPopupOpen] = React.useState(false);
-  const [isSearchResultOpen, setIsSearchResultOpen] = React.useState(false);
-  const [isInfoPopupOpen, setIsInfoPopupOpen] = React.useState(false);
-  const [isMobilePopupOpen, setIsMobilePopupOpen] = React.useState(false);
+  const [isInfoOpen, setIsInfoOpen] = React.useState(false);
   const [loggedIn, setLoggedIn] = React.useState(false);
+  const [isSucceed, setIsSucceed] = React.useState(false);
+  const [articles, setArticles] = React.useState([]);
   const location = useLocation();
   const homePage = location.pathname === "/";
-  // const [currentUser, setCurrentUser] = React.useState({});
+  const [searchBlockIsOpen, setSearchBlockIsOpen] = React.useState(false);
+  const [isLoad, setIsLoad] = React.useState(false);
+  const [currentUser, setCurrentUser] = React.useState({});
+  const [currentKeyword, setCurrentKeyword] = React.useState("");
+  const [signError, setSignError] = React.useState("");
 
-  function handleSearchResultClick() {
-    setIsSearchResultOpen(true);
+  React.useEffect(() => {
+    const token = localStorage.getItem("jwt");
+    token &&
+      checkToken(token)
+        .then((res) => {
+          setLoggedIn(true);
+          setCurrentUser((currentUser) => ({
+            ...currentUser,
+            email: res.email,
+          }));
+        })
+        .catch((err) => console.log(err));
+  }, []);
+  React.useEffect(() => {
+    loggedIn &&
+      getArticles()
+        .then((res) => {
+          setCurrentUser((currentUser) => ({ ...currentUser, articles: res }));
+        })
+        .catch((err) => console.log(err));
+  }, [loggedIn]);
+  React.useEffect(() => {
+    loggedIn &&
+      getUserData()
+        .then((res) => {
+          setCurrentUser((currentUser) => ({ ...currentUser, ...res }));
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+  }, [loggedIn]);
+
+  function searchArticle(keyword) {
+    setCurrentKeyword(keyword);
+    setArticles([]);
+    setIsLoad(true);
+    setSearchBlockIsOpen(true);
+    api
+      .getArticles(keyword)
+      .then((data) => {
+        setIsLoad(false);
+        setArticles(data.articles);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
-
-  function handleClearForm() {
-    document.addEventListener("submit", (evt) => {
-      evt.preventDefault();
-      evt.target.reset();
-    });
+  function handleCardSave(card) {
+    saveArticle(currentKeyword, card)
+      .then((res) => {
+        setCurrentUser((currentUser) => ({
+          ...currentUser,
+          articles: [...currentUser.articles, res],
+        }));
+      })
+      .catch((err) => console.log(err));
+  }
+  function handleCardDelete(id) {
+    deleteArticle(id)
+      .then((res) => {
+        const arr = currentUser.articles.filter((item) => item._id !== id);
+        setCurrentUser((currentUser) => ({
+          ...currentUser,
+          articles: arr,
+        }));
+      })
+      .catch((err) => console.log(err));
   }
 
   function closeAllPopups() {
-    setIsMobilePopupOpen(false);
     setIsSignInPopupOpen(false);
     setIsSignUpPopupOpen(false);
-    setIsInfoPopupOpen(false);
-  }
-
-  function handleSingInSubmit(evt) {
-    evt.preventDefault();
-    setLoggedIn(true);
-    closeAllPopups();
-  }
-
-  function handleLoggedOutState() {
-    setLoggedIn(false);
-  }
-
-  function handleMobilePopupClickOpen() {
-    closeAllPopups();
-    setIsMobilePopupOpen(true);
+    setIsInfoOpen(false);
   }
 
   function handleMobilePopupClickClose() {
     closeAllPopups();
-    setIsMobilePopupOpen(false);
   }
 
-  function handleInfoPopupClick(evt) {
-    evt.preventDefault();
-    closeAllPopups();
-    setIsInfoPopupOpen(true);
-  }
   function openRegisterPopup() {
-    handleClearForm();
+    setSignError("");
     closeAllPopups();
     setIsSignUpPopupOpen(true);
   }
   function openLoginPopup() {
-    handleClearForm();
+    setSignError("");
     closeAllPopups();
     setIsSignInPopupOpen(true);
   }
@@ -90,132 +138,120 @@ function App() {
     }
   }
 
-  React.useEffect(() => {
-    const closeByEscape = (e) => {
-      if (e.key === "Escape") {
-        closeAllPopups();
-      }
-    };
-    if (isSignInPopupOpen || isSignUpPopupOpen || isInfoPopupOpen)
-      document.addEventListener("keydown", closeByEscape);
-    return () => document.removeEventListener("keydown", closeByEscape);
-  }, [isSignInPopupOpen, isSignUpPopupOpen, isInfoPopupOpen]);
-
-  React.useEffect(() => {
-    const closeByClickOnScreen = (e) => {
-      if (e.target.matches(".popup")) {
-        const popup = document.querySelectorAll(".popup");
-        if (e.target !== popup) {
-          closeAllPopups();
+  function handleLogin(data) {
+    authorize(data)
+      .then((res) => {
+        if (res.token) {
+          setIsSucceed(true);
+          setLoggedIn(true);
+          localStorage.setItem("jwt", res.token);
         }
-      }
-    };
-    if (isSignInPopupOpen || isSignUpPopupOpen || isInfoPopupOpen)
-      document.addEventListener("mouseup", closeByClickOnScreen);
-    return () => document.removeEventListener("mouseup", closeByClickOnScreen);
-  }, [isSignInPopupOpen, isSignUpPopupOpen, isInfoPopupOpen]);
+        closeAllPopups();
+      })
+      .catch((err) => setSignError(err));
+  }
+
+  function handleLoggedOut() {
+    setLoggedIn(false);
+    localStorage.removeItem("jwt");
+    setCurrentUser({});
+    setArticles([]);
+  }
+
+  function handleRegister(data) {
+    closeAllPopups();
+    register({
+      email: data.email,
+      password: data.password,
+      name: data.username,
+    })
+      .then((res) => {
+        setIsSucceed(true);
+        closeAllPopups();
+        setIsInfoOpen(true);
+      })
+      .catch((err) => console.log(err));
+  }
 
   return (
     <div className={`app ${homePage ? "app_theme_dark" : ""}`}>
-      <Navigation
-        loggedIn={loggedIn}
-        onClose={closeAllPopups}
-        handleLoggedUserClick={handleLoggedOutState}
-        handleNotLoggedUserClick={openLoginPopup}
-        onMobilePopupClickClose={handleMobilePopupClickClose}
-        onMobilePopupClickOpen={handleMobilePopupClickOpen}
-      />
-      <Routes>
-        <Route
-          path="/"
-          element={
-            <Main
-              onClick={handleSearchResultClick}
-              isOpen={isSearchResultOpen}
-            />
-          }
+      <CurrentUserContext.Provider value={currentUser}>
+        <Navigation
+          loggedIn={loggedIn}
+          onClose={closeAllPopups}
+          handleLoggedUserClick={handleLoggedOut}
+          handleNotLoggedUserClick={openLoginPopup}
+          onMobilePopupClickClose={handleMobilePopupClickClose}
         />
-        <Route path="/saved-news" element={<SavedNews loggedIn={loggedIn} />} />
-      </Routes>
-      <About />
-      <PopupWithForm
-        loggedIn={loggedIn}
-        onOpen={openRegisterPopup}
-        submitHandler={handleSingInSubmit}
-        isOpen={isSignInPopupOpen}
-        onClose={closeAllPopups}
-        name="sign-in"
-        title="Sign in"
-        buttonText="Sign in"
-        linkText="Sign up"
-      >
-        <PopupInput
-          title="Email"
-          id="input_type_email"
-          type="email"
-          placeholder="Enter email"
-          name="popupSignInEmail"
-          errorText="Invalid email address"
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <Main
+                onOpenRegisterPopup={openRegisterPopup}
+                isLoad={isLoad}
+                onSearch={searchArticle}
+                isOpen={searchBlockIsOpen}
+                articles={articles}
+                isSucceed={isSucceed}
+                loggedIn={loggedIn}
+                onCardDelete={handleCardDelete}
+                onCardSave={handleCardSave}
+              />
+            }
+          />
+          <Route
+            path="/saved-news"
+            element={
+              <SavedNews
+                loggedIn={loggedIn}
+                onCardDelete={handleCardDelete}
+                onCardSave={handleCardSave}
+              />
+            }
+          />
+        </Routes>
+        <Login>
+          <PopupWithForm
+            isOpen={isSignInPopupOpen}
+            onClose={closeAllPopups}
+            onOpen={openRegisterPopup}
+            name="sign-in"
+            title="Sign in"
+            linkText="Sign up"
+            buttonText="Sign in"
+            submitHandler={handleLogin}
+            signError={signError}
+          >
+            <PopupInput title="Email" type="email" name="email" />
+            <PopupInput title="Password" type="password" name="password" />
+          </PopupWithForm>
+        </Login>
+        <Register>
+          <PopupWithForm
+            onSignInPopupClick={handleFormClick}
+            submitHandler={handleRegister}
+            isOpen={isSignUpPopupOpen}
+            onOpen={openLoginPopup}
+            onClose={closeAllPopups}
+            name="sign-up"
+            title="Sign up"
+            buttonText="Sign up"
+            linkText="Sign in"
+            signError={signError}
+          >
+            <PopupInput title="Email" type="email" name="email" />
+            <PopupInput title="Password" type="password" name="password" />
+            <PopupInput title="Username" type="text" name="username" />
+          </PopupWithForm>
+        </Register>
+        <InfoPopup
+          isOpen={isInfoOpen}
+          onClose={closeAllPopups}
+          handleNotLoggedUserClick={openLoginPopup}
         />
-        <PopupInput
-          title="Password"
-          id="input_type_password"
-          type="password"
-          placeholder="Enter password"
-          name="popupSignInPassword"
-          errorText="Invalid password"
-        />
-      </PopupWithForm>
-      <PopupWithForm
-        onInfoPopupClick={handleInfoPopupClick}
-        onSignInPopupClick={handleFormClick}
-        submitHandler={handleInfoPopupClick}
-        isOpen={isSignUpPopupOpen}
-        onOpen={openLoginPopup}
-        onClose={closeAllPopups}
-        name="sign-up"
-        title="Sign up"
-        buttonText="Sign up"
-        linkText="Sign in"
-      >
-        <PopupInput
-          title="Email"
-          id="input_type_email"
-          type="email"
-          placeholder="Enter email"
-          name="popupSignUpEmail"
-          errorText="Invalid email address"
-        />
-        <PopupInput
-          title="Password"
-          id="input_type_password"
-          type="password"
-          placeholder="Enter password"
-          name="popupSignUpPassword"
-          errorText="Invalid password"
-        />
-        <PopupInput
-          title="Username"
-          id="input_type_username"
-          type="text"
-          placeholder="Enter your username"
-          name="popupSignUpUsername"
-          errorText="Invalid username"
-        />
-      </PopupWithForm>
-      <InfoPopup
-        name="info-popup"
-        isOpen={isInfoPopupOpen}
-        onClose={closeAllPopups}
-        handleNotLoggedUserClick={openLoginPopup}
-      />
-      <MobilePopup
-        name="mobile"
-        onSignInPopupClick={handleFormClick}
-        isOpenMobile={isMobilePopupOpen}
-        onClose={closeAllPopups}
-      />
-      <Footer />
+        <Footer />
+      </CurrentUserContext.Provider>
     </div>
   );
 }

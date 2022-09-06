@@ -2,18 +2,9 @@
 import React from "react";
 import "./NewsCardList.css";
 import "../NewsCard/NewsCard.css";
-import NewsCard from "../NewsCard/NewsCard";
 
-function NewsCardList() {
-  return (
-    <div className="news-list">
-      <NewsCard />
-      <NewsCard />
-      <NewsCard />
-      <NewsCard />
-      <NewsCard />
-    </div>
-  );
+function NewsCardList({ children }) {
+  return <div className="news-list">{children}</div>;
 }
 
 export default NewsCardList;

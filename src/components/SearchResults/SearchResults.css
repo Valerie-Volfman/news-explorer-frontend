@@ -42,7 +42,9 @@
 .search-results__button:hover {
   background-color: #e8e8e8;
 }
-
+.search-results__button_hidden {
+  display: none;
+}
 @media (min-width: 1107px) and (max-width: 1437px) {
   .search-results__title {
     margin: 0 auto 0 204px;

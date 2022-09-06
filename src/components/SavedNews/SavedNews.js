@@ -3,18 +3,30 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import "./SavedNews.css";
+import NewsCard from "../NewsCard/NewsCard";
 import SavedNewsHeader from "../SavedNewsHeader/SavedNewsHeader";
-import NewsCardList from "../NewsCardList/NewsCardList";
+import CurrentUserContext from "../../contexts/CurrentUserContext";
 
-function SavedNews({ loggedIn }) {
+function SavedNews({ loggedIn, onCardDelete, onCardSave }) {
   const navigate = useNavigate();
+  const currentUser = React.useContext(CurrentUserContext);
   React.useEffect(() => {
     !loggedIn && navigate("/");
   }, [loggedIn, navigate]);
   return (
     <div className="saved-news">
       <SavedNewsHeader />
-      <NewsCardList loggedIn={loggedIn} />
+      <div className="news-list saved-news-list">
+        {currentUser.articles &&
+          currentUser.articles.map((item) => (
+            <NewsCard
+              key={item._id}
+              card={item}
+              onCardDelete={onCardDelete}
+              oncardSave={onCardSave}
+            />
+          ))}
+      </div>
     </div>
   );
 }

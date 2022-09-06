@@ -6,7 +6,7 @@
   border-top: none;
   border-right: none;
   border-left: none;
-  margin: 0 auto 31px auto;
+  margin: 0 auto;
   width: 100%;
   font-family: "Inter", sans-serif;
   font-size: 14px;
@@ -41,11 +41,15 @@
 
 .popup__input-title {
   padding: 0;
-  margin: 0;
+  margin: 13px 0 0 0;
   color: #2f71e5;
   font-size: 12px;
   line-height: 15px;
   font-weight: 400;
+}
+
+.popup__input-title:first-child {
+  margin-top: 0;
 }
 
 .popup__input-error-main {
@@ -54,8 +58,6 @@
 }
 
 .popup__input-error {
-  visibility: hidden;
-  display: none;
   color: #ff0000;
   font-size: 12px;
   line-height: 15px;
@@ -66,7 +68,6 @@
   visibility: visible;
   display: block;
 }
-
 @media (max-width: 768px) {
   .popup__input {
     max-width: 288px;

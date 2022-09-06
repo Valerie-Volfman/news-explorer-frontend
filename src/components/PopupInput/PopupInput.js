@@ -3,29 +3,23 @@
 import React from "react";
 import "./PopupInput.css";
 
-function PopupInput({
-  title,
-  inputId,
-  inputType,
-  placeholder,
-  inputName,
-  errorText,
-}) {
+function PopupInput({ title, name, values, errors, handleChange }) {
   return (
     <>
       <p className="popup__input-title">{title}</p>
       <input
-        id={inputId}
-        type={inputType}
-        placeholder={`${placeholder}`}
-        name={inputName}
+        onChange={handleChange}
+        value={values[name] || ""}
+        type={name}
+        placeholder={`Enter ${name}`}
+        name={name}
         minLength="4"
         maxLength="45"
         required
         className="popup__input popup__input_type_email"
       />
       <span id="input_type_card-title-error" className="popup__input-error">
-        {errorText}
+        {errors[name]}
       </span>
     </>
   );

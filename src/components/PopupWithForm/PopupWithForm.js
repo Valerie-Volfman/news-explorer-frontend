@@ -1,6 +1,7 @@
-/* eslint-disable react/prop-types */
 import React from "react";
+import Popup from "../Popup/Popup";
 import "./PopupWithForm.css";
+import useFormAndValidation from "../../hooks/useFormAndValidation";
 
 function PopupWithForm({
   isOpen,
@@ -12,52 +13,53 @@ function PopupWithForm({
   buttonText,
   linkText,
   submitHandler,
-  setValue,
+  signError,
 }) {
+  const useForm = useFormAndValidation();
+  const { values, isValid, resetForm, handleChange, errors } = useForm;
+  React.useEffect(() => {
+    isOpen && resetForm();
+  }, [isOpen, resetForm]);
+  function handleSubmit(e) {
+    e.preventDefault();
+    submitHandler(values);
+  }
   return (
-    <div className={`popup popup_type_${name} ${isOpen && "popup__is-opened"}`}>
-      <div className="popup__content">
+    <Popup isOpen={isOpen} name={name} onClose={onClose}>
+      <h2 className="popup__title">{title}</h2>
+      <form
+        onSubmit={(evt) => handleSubmit(evt)}
+        name={name}
+        className="popup__form"
+      >
+        {React.Children.map(children, (child) =>
+          React.cloneElement(child, {
+            values,
+            handleChange,
+            errors,
+          })
+        )}
+        <span className="popup__input-error popup__form-error">
+          {signError}
+        </span>
         <button
-          onClick={onClose}
-          aria-label="close"
-          type="button"
-          className="popup__close-button"
-        />
-        <h2 className="popup__title">{title}</h2>
-        <form
-          onSubmit={(evt) => submitHandler(evt)}
-          name={name}
-          className="popup__form"
+          aria-label="save"
+          type="submit"
+          name="popupSaveButton"
+          className={`popup__save-button ${
+            !isValid && "popup__save-button_disabled"
+          }`}
         >
-          {children}
-          <span
-            id="input_type_profession-error"
-            className="popup__input-error-main popup__input-error"
-          >
-            This email is not available
-          </span>
-          <button
-            onClick={setValue}
-            aria-label="save"
-            type="submit"
-            name="popupSaveButton"
-            className="popup__save-button popup__save-button_disabled"
-          >
-            {buttonText}
+          {buttonText}
+        </button>
+        <p className="popup__link">
+          or
+          <button type="button" onClick={onOpen} className="popup__link-words">
+            {linkText}
           </button>
-          <p className="popup__link">
-            or{" "}
-            <button
-              type="button"
-              onClick={onOpen}
-              className="popup__link-words"
-            >
-              {linkText}
-            </button>
-          </p>
-        </form>
-      </div>
-    </div>
+        </p>
+      </form>
+    </Popup>
   );
 }
 

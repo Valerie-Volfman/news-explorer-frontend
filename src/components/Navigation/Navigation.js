@@ -7,35 +7,38 @@ import { Link, useLocation } from "react-router-dom";
 import "./Navigation.css";
 import exitIcon from "../../images/exit.svg";
 import exitIconWhite from "../../images/logout.svg";
+import CurrentUserContext from "../../contexts/CurrentUserContext";
 
 function Navigation({
-  onMobilePopupClickOpen,
   onClose,
   loggedIn,
   handleLoggedUserClick,
   handleNotLoggedUserClick,
 }) {
+  const currentUser = React.useContext(CurrentUserContext);
   const [isActive, setIsActive] = React.useState(false);
   const location = useLocation();
   const savedNewsPageLocation = location.pathname === "/saved-news";
 
-  function handleMobilePopup() {
-    if (isActive) {
-      onClose();
-    } else {
-      onMobilePopupClickOpen();
-    }
-  }
-
   return (
     <div
-      className={`menu menu_theme_light ${
-        savedNewsPageLocation && "menu__theme_dark"
-      }`}
+      className={`${
+        !isActive ? "menu_state_hidden" : "menu menu_theme_light"
+      } ${savedNewsPageLocation && isActive ? "menu-mb_theme_light" : ""}`}
     >
-      <div className="menu__bg">
-        <Link to="/" className="menu__logo">NewsExplorer</Link>
-        <nav className="menu__navigation">
+      <div
+        className={`menu__bg ${
+          savedNewsPageLocation ? "menu__bg_theme_light" : ""
+        } ${!isActive ? "menu__bg_hidden" : ""}`}
+      >
+        <Link to="/" className="menu__logo">
+          NewsExplorer
+        </Link>
+        <nav
+          className={`menu__navigation ${
+            !isActive ? "menu__navigation_state_hidden" : ""
+          }`}
+        >
           <Link
             className={`menu__button menu__button_state_active ${
               savedNewsPageLocation
@@ -67,10 +70,14 @@ function Navigation({
               type="button"
               className="menu__main-button"
             >
-              <p>Elise</p>
+              <p>{currentUser.name}</p>
               <img
                 className="menu__icon-exit"
-                src={savedNewsPageLocation ? exitIcon : exitIconWhite}
+                src={
+                  savedNewsPageLocation
+                    ? exitIcon
+                    : exitIconWhite || `${isActive && exitIconWhite}`
+                }
                 alt="logout"
               />
             </button>
@@ -86,7 +93,7 @@ function Navigation({
         </nav>
         <button
           type="button"
-          onClick={() => `${handleMobilePopup()}` && setIsActive(!isActive)}
+          onClick={() => setIsActive(!isActive)}
           className="menu__burger-button"
         >
           <span
